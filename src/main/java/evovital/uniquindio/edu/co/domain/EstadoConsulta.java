@@ -1,4 +1,24 @@
 package evovital.uniquindio.edu.co.domain;
 
-public class EstadoConsulta {
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.io.Serializable;
+
+@Entity
+@Table(name = "estado_consulta")
+@ToString
+@Getter
+@Setter
+@NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+public class EstadoConsulta implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
+    private Long id;
+
+    private String estado;
+
 }

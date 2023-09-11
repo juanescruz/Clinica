@@ -1,18 +1,20 @@
 package evovital.uniquindio.edu.co.domain;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.PrimaryKeyJoinColumn;
+import jakarta.persistence.Table;
+import lombok.*;
 
 import java.io.Serializable;
 
 @Entity
-public class Administrador implements Serializable {
-
-    @Id
-    private long administradorId;
-    private String nombre;
-    private String email;
-    private String contraseña;
-    private String sal;
+@Table(name = "administradores")
+@NoArgsConstructor
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
+@PrimaryKeyJoinColumn(name = "administrador_id")
+public class Administrador extends Usuario implements Serializable {
 
 }

@@ -4,28 +4,28 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.List;
 
+@Inheritance(strategy = InheritanceType.JOINED)
 @Entity
-@Table(name = "dias_libres")
+@Table(name = "usuarios")
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class DiaLibre implements Serializable {
+public class Usuario implements Serializable {
 
     @Id
-    @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Long id;
+    private String nombre;
+    private String email;
+    private String contraseña;
+    private String sal;
 
-    private LocalDate fecha;
+    @OneToMany(mappedBy = "usuario")
+    private List<Mensaje> mensajes;
 
-    @ManyToMany
-    private List<Medico> medicos;
-
-    @ManyToOne
-    private EstadoDiaLibre estadoDiaLibre;
 }

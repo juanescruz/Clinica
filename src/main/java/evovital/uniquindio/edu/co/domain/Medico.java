@@ -1,22 +1,44 @@
 package evovital.uniquindio.edu.co.domain;
 
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.*;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Medico {
+@Entity
+@Table(name = "medicos")
+@NoArgsConstructor
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
+@PrimaryKeyJoinColumn(name = "medico_id")
+public class Medico extends Usuario implements Serializable {
 
-    @Id
-    private long medicoId;
-    private String nombre;
-    private String email;
-    private String contraseña;
-    private String sal;
+    @Column(name = "nombre_completo")
+    private String nombreCompleto;
+
+    @Column(name = "ciudad_residencia")
     private String ciudadResidencia;
+
     private String telefono;
+
+    @Column(name = "foto_personal")
     private String fotoPersonal;
+
+    @OneToMany(mappedBy = "medico")
     private List<Consulta> consultas;
+
+    @ManyToOne
     private Especialidad especialidad;
+
     private boolean estaActivo;
+
+    @OneToMany(mappedBy = "medico")
+    private List<HorarioAtencion> horarios;
+
+    @ManyToMany(mappedBy = "medicos")
+    private List<DiaLibre> diasLibres;
 
 }
