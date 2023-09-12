@@ -11,10 +11,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Table(name = "pacientes")
 @Getter
 @Setter
-@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 @PrimaryKeyJoinColumn(name = "paciente_id")
 public class Paciente extends Usuario implements Serializable {
 

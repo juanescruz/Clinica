@@ -6,7 +6,6 @@ import lombok.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "estado_consulta")
 @ToString
 @Getter
 @Setter

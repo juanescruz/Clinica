@@ -7,12 +7,11 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@Table(name = "medicos")
 @NoArgsConstructor
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 @PrimaryKeyJoinColumn(name = "medico_id")
 public class Medico extends Usuario implements Serializable {
 

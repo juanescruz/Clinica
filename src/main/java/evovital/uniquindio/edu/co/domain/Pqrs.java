@@ -20,8 +20,8 @@ public class Pqrs implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
-    private Consulta consulta;
+    @OneToOne (mappedBy = "pqrs")
+    private Consulta consulta; //TODO aqui va el mappedBy
 
     @ManyToOne
     private EstadoPqrs estadoPqrs;

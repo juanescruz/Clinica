@@ -8,7 +8,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "consultas")
 @Getter
 @Setter
 @ToString
@@ -24,10 +23,10 @@ public class Consulta implements Serializable {
     @ManyToOne
     private Medico medico;
 
-    @OneToOne(mappedBy = "consulta")
+    @OneToOne
     private Pqrs pqrs;
 
-    @OneToOne(mappedBy = "consulta")
+    @OneToOne
     private AtencionConsulta atencionConsulta;
 
     private String respuesta;

@@ -6,7 +6,6 @@ import lombok.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "atencion_consulta")
 @Getter
 @Setter
 @ToString
@@ -19,12 +18,12 @@ public class AtencionConsulta implements Serializable {
     @EqualsAndHashCode.Include
     private Long id;
 
-    @OneToOne
+    @OneToOne (mappedBy = "atencionConsulta")
     private Consulta consulta;
 
     private String sintomas;
     private String diagnostico;
     private String tratamiento;
-    private String notas_medicas;
+    private String notasMedicas;
 
 }

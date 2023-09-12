@@ -8,7 +8,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table(name = "dias_libres")
 @Getter
 @Setter
 @ToString

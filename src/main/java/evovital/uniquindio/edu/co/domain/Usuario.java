@@ -8,13 +8,12 @@ import java.util.List;
 
 @Inheritance(strategy = InheritanceType.JOINED)
 @Entity
-@Table(name = "usuarios")
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Usuario implements Serializable {
+public abstract class Usuario implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +21,7 @@ public class Usuario implements Serializable {
     private Long id;
     private String nombre;
     private String email;
-    private String contraseña;
+    private String password;
     private String sal;
 
     @OneToMany(mappedBy = "usuario")

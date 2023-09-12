@@ -7,7 +7,6 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "horario_atencion")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -25,5 +24,4 @@ public class HorarioAtencion implements Serializable {
 
     @ManyToOne
     private Medico medico;
-
 }

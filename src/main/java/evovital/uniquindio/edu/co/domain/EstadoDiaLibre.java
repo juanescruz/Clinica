@@ -7,7 +7,6 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@Table(name = "estado_dia_libre")
 @ToString
 @Getter
 @Setter
