@@ -19,14 +19,18 @@ public class Mensaje implements Serializable {
     @EqualsAndHashCode.Include
     private Long id;
 
+    @Lob
+    @Column(nullable = false)
     private String contenido;
 
-    @Column(name = "hora_y_fecha")
+    @Column(nullable = false)
     private LocalDateTime horaYFecha;
 
+    @JoinColumn(nullable = false)
     @ManyToOne
     private Usuario usuario;
 
+    @JoinColumn(nullable = false)
     @ManyToOne
     private Pqrs pqrs;
 

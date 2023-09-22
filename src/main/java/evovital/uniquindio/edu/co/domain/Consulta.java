@@ -20,29 +20,33 @@ public class Consulta implements Serializable {
     @EqualsAndHashCode.Include
     private Long id;
 
+    @JoinColumn(nullable = false)
     @ManyToOne
     private Medico medico;
 
+    @JoinColumn(nullable = false)
     @OneToOne
     private Pqrs pqrs;
 
     @OneToOne
     private AtencionConsulta atencionConsulta;
 
-    private String respuesta;
-
+    @JoinColumn(nullable = false)
     @ManyToOne
     private Paciente paciente;
 
-    @Column(name = "fecha_creacion")
+    @Column(nullable = false)
     private LocalDate fechaCreacion;
 
-    @Column(name = "fecha_y_hora_atencion")
+    @Column(nullable = false)
     private LocalDateTime fechaYHoraAtencion;
 
+    @JoinColumn(nullable = false)
     @ManyToOne
     private EstadoConsulta estadoConsulta;
 
+    @Lob
+    @Column(nullable = false)
     private String motivo;
 
 }

@@ -19,6 +19,7 @@ public class EstadoPqrs implements Serializable {
     @EqualsAndHashCode.Include
     private Long id;
 
+    @Column(nullable = false, length = 31)
     private String estado;
 
     @OneToMany(mappedBy = "estadoPqrs")

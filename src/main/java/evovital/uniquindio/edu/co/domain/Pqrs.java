@@ -7,7 +7,6 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "pqrs")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -20,14 +19,15 @@ public class Pqrs implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JoinColumn(nullable = false)
     @OneToOne (mappedBy = "pqrs")
-    private Consulta consulta; //TODO aqui va el mappedBy
+    private Consulta consulta;
 
+    @JoinColumn(nullable = false)
     @ManyToOne
     private EstadoPqrs estadoPqrs;
 
-    @Column(name = "fecha_creacion")
+    @Column(nullable = false)
     private LocalDate fechaCreacion;
 
-    private String detalle;
 }

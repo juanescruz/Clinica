@@ -2,6 +2,7 @@ package evovital.uniquindio.edu.co.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 import java.util.List;
@@ -11,27 +12,30 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@PrimaryKeyJoinColumn(name = "medico_id")
+@SuperBuilder
+// @PrimaryKeyJoinColumn(name = "medico_id")
 public class Medico extends Usuario implements Serializable {
 
-    @Column(name = "nombre_completo")
-    private String nombreCompleto;
-
-    @Column(name = "ciudad_residencia")
+    @Column(nullable = false, length = 31)
     private String ciudadResidencia;
 
+    @Column(nullable = false, length = 31)
     private String telefono;
 
-    @Column(name = "foto_personal")
-    private String fotoPersonal;
+    @Lob
+    @Column(nullable = false)
+    private String urlFotoPersonal;
 
     @OneToMany(mappedBy = "medico")
     private List<Consulta> consultas;
 
+    @JoinColumn(nullable = true)
     @ManyToOne
     private Especialidad especialidad;
 
+    @Column(nullable = false, length = 1)
     private boolean estaActivo;
 
     @OneToMany(mappedBy = "medico")

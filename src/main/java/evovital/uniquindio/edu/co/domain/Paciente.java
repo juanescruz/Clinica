@@ -14,26 +14,29 @@ import java.util.List;
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)
-@PrimaryKeyJoinColumn(name = "paciente_id")
+// @PrimaryKeyJoinColumn(name = "paciente_id")
 public class Paciente extends Usuario implements Serializable {
 
-    @Column(name = "fecha_nacimiento")
+    @Column(nullable = false)
     private LocalDate fechaNacimiento;
+
+    @Lob
     private String alergias;
+
+    @Column(nullable = false, length = 31)
     private String eps;
 
-    @Column(name = "tipo_sangre")
+    @Column(nullable = false, length = 3)
     private String tipoSangre;
 
-    @Column(name = "nombre_completo")
-    private String nombreCompleto;
-
-    @Column(name = "ciudad_residencia")
+    @Column(nullable = false, length = 63)
     private String ciudadResidencia;
 
+    @Column(nullable = false, length = 31)
     private String telefono;
 
-    @Column(name = "foto_personal")
+    @Lob
+    @Column(nullable = false)
     private String fotoPersonal;
 
     @OneToMany(mappedBy = "paciente")

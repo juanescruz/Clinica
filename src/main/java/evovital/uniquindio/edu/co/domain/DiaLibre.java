@@ -20,11 +20,13 @@ public class DiaLibre implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private LocalDate fecha;
 
     @ManyToMany
     private List<Medico> medicos;
 
+    @JoinColumn(nullable = false)
     @ManyToOne
     private EstadoDiaLibre estadoDiaLibre;
 }

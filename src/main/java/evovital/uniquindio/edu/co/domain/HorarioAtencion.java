@@ -4,7 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.sql.Time;
+import java.time.DayOfWeek;
 
 @Entity
 @Getter
@@ -19,9 +20,16 @@ public class HorarioAtencion implements Serializable {
     @EqualsAndHashCode.Include
     private Long id;
 
-    private LocalDateTime inicio;
-    private LocalDateTime fin;
+    @Column(nullable = false)
+    private DayOfWeek dia;
 
+    @Column(nullable = false)
+    private Time inicio;
+
+    @Column(nullable = false)
+    private Time fin;
+
+    @JoinColumn(nullable = false)
     @ManyToOne
     private Medico medico;
 }

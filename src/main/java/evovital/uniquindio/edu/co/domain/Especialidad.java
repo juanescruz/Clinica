@@ -19,6 +19,7 @@ public class Especialidad implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, length = 31)
     private String nombre;
 
     @OneToMany(mappedBy = "especialidad")

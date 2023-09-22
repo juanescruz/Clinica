@@ -18,12 +18,20 @@ public class AtencionConsulta implements Serializable {
     @EqualsAndHashCode.Include
     private Long id;
 
+    @JoinColumn(nullable = false)
     @OneToOne (mappedBy = "atencionConsulta")
     private Consulta consulta;
 
+    @Column(nullable = false)
     private String sintomas;
+
+    @Column(nullable = false)
     private String diagnostico;
+
+    @Column(nullable = false)
     private String tratamiento;
+
+    @Column(nullable = false)
     private String notasMedicas;
 
 }

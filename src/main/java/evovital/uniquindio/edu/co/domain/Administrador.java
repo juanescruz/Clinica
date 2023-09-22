@@ -1,7 +1,6 @@
 package evovital.uniquindio.edu.co.domain;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.PrimaryKeyJoinColumn;
 import lombok.*;
 
 import java.io.Serializable;
@@ -12,7 +11,7 @@ import java.io.Serializable;
 @Setter
 @ToString
 @EqualsAndHashCode(callSuper = true)
-@PrimaryKeyJoinColumn(name = "administrador_id")
+// @PrimaryKeyJoinColumn(name = "administrador_id")
 public class Administrador extends Usuario implements Serializable {
 
 }
