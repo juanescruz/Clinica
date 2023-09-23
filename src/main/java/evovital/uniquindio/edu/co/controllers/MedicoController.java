@@ -18,11 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/medicos")
 public class MedicoController {
 
-    @Autowired
-    private MedicoRepository medicoRepository;
+    private final MedicoRepository medicoRepository;
+    private final UsuarioRepository usuarioRepository;
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+    public MedicoController(MedicoRepository medicoRepository, UsuarioRepository usuarioRepository) {
+        this.medicoRepository = medicoRepository;
+        this.usuarioRepository = usuarioRepository;
+    }
 
     @GetMapping
     public ResponseEntity<Page<Medico>> getMedicos(@PageableDefault(size = 10) Pageable paginacion) {
@@ -32,7 +34,16 @@ public class MedicoController {
     @PostMapping
     public ResponseEntity<Usuario> crearMedico() {
 
-        Usuario medico = Medico.builder().cedula("12345").email("holamundo@hola.com").ciudadResidencia("Bogotá").estaActivo(true).nombre("Edwin").password("hola").telefono("12355").urlFotoPersonal("hola.com").build();
+        Usuario medico = Medico.builder()
+                .cedula("12345")
+                .email("holamundo@hola.com")
+                .ciudadResidencia("Bogotá")
+                .estaActivo(true)
+                .nombre("Edwin")
+                .password("hola")
+                .telefono("12355")
+                .urlFotoPersonal("hola.com")
+                .build();
 
         return ResponseEntity.ok(usuarioRepository.save(medico));
     }
