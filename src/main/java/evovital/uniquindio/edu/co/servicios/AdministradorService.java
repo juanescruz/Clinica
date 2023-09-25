@@ -1,9 +1,10 @@
 package evovital.uniquindio.edu.co.servicios;
 
-import evovital.uniquindio.edu.co.dto.cita.ConsultaDTOAdmin;
+import evovital.uniquindio.edu.co.dto.consulta.ConsultaDTOAdmin;
 import evovital.uniquindio.edu.co.dto.medico.InfoMedicoDTO;
 import evovital.uniquindio.edu.co.dto.medico.MedicoDTO;
 import evovital.uniquindio.edu.co.dto.medico.MedicoDTOAdmin;
+import evovital.uniquindio.edu.co.dto.mensaje.MensajeDTOUsuario;
 import evovital.uniquindio.edu.co.dto.pqrs.InfoPQRSDTO;
 import evovital.uniquindio.edu.co.dto.pqrs.PQRSDTOAdmin;
 
@@ -23,7 +24,7 @@ public interface AdministradorService {
 
     List<PQRSDTOAdmin> listarPQRS() throws Exception;
 
-    String responderPQRS(int codigo) throws Exception;
+    String responderPQRS(Long idPqrs, MensajeDTOUsuario mensajeUsuario) throws Exception;
 
     InfoPQRSDTO verDetallePQRS(int codigo) throws Exception;
 

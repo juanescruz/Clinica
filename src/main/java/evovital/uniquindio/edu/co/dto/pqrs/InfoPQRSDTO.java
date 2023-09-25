@@ -7,9 +7,9 @@ import java.util.List;
 
 public record InfoPQRSDTO(
 
-        int codigo,
+        Long idPQRS,
         String estado,
-        int codigoCita,
+        Long idConsulta,
         String motivo,
         String nombrePaciente,
         LocalDateTime fecha,

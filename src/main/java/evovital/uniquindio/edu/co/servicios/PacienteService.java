@@ -1,31 +1,47 @@
 package evovital.uniquindio.edu.co.servicios;
 
+import evovital.uniquindio.edu.co.dto.consulta.ConsultaDTOPaciente;
+import evovital.uniquindio.edu.co.dto.consulta.DetalleConsultaDTOPaciente;
+import evovital.uniquindio.edu.co.dto.consulta.InfoConsultaDTO;
+import evovital.uniquindio.edu.co.dto.mensaje.MensajeDTOUsuario;
+import evovital.uniquindio.edu.co.dto.paciente.PacienteDTO;
+import evovital.uniquindio.edu.co.dto.pqrs.PQRSDTOPaciente;
+import evovital.uniquindio.edu.co.dto.pqrs.PQRSDTOPacienteReq;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
+
 public interface PacienteService {
 
-    void registrarse();
+    boolean registrarse(PacienteDTO pacienteDTO);
 
-    void editarPerfil();
+    boolean editarPerfil(int idPaciente, PacienteDTO pacienteDTO);
 
-    void eliminarCuenta();
+    PacienteDTO eliminarCuenta(int idPaciente);
 
-    void enviarLinkRecuperacion();
+    boolean enviarLinkRecuperacion(String emailPaciente);
 
-    void cambiarPassword();
+    boolean cambiarPassword(int idPaciente, String password);
 
-    void agendarCita();
+    void agendarCita(InfoConsultaDTO consultaDTO);
 
-    void crearPQR();
+    void crearPQR(PQRSDTOPacienteReq pqrsPaciente);
 
-    void listarPQRSPaciente();
+    List<PQRSDTOPaciente> listarPQRSPaciente(Long idPaciente);
 
-    void responderPQRS();
+    void responderPQRS(Long idPQRS, MensajeDTOUsuario mensajeUsuario);
 
-    void listarCitasPaciente();
+    List<ConsultaDTOPaciente> listarConsultasPaciente(Long idPaciente);
 
-    void filtrarCitasPorFecha();
+    List<ConsultaDTOPaciente> filtrarConsultasPorFecha(Long idPaciente, LocalDate fecha);
 
-    void filtarCitasPorMedico();
+    List<ConsultaDTOPaciente> filtarConsultasPorMedico(Long idPaciente, Long idMedico);
 
-    void verDetalleConsulta();
+    DetalleConsultaDTOPaciente verDetalleConsulta(Long idConsulta);
+
+    boolean reagendarConsulta(Long idConsulta, LocalDateTime fechaYHora);
+
+    boolean calificarPQRS(Long idPQRS, int calificacion);
 
 }

@@ -2,6 +2,6 @@ package evovital.uniquindio.edu.co.servicios;
 
 public interface AutenticacionService {
 
-    void login();
+    boolean login(String email, String contraseña) throws Exception;
 
 }

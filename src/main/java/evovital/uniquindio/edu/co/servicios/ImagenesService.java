@@ -1,7 +1,9 @@
 package evovital.uniquindio.edu.co.servicios;
 
+import java.io.File;
+
 public interface ImagenesService {
 
-    void subirImagen();
+    String subirImagen(File imagen);
 
 }
