@@ -25,7 +25,7 @@ public abstract class Usuario implements Serializable {
     @Column(nullable = false, length = 63)
     private String nombre;
 
-    @Column(nullable = false, length = 31)
+    @Column(nullable = false, length = 31, unique = true)
     private String email;
 
     @Column(nullable = false, length = 31)
@@ -37,7 +37,7 @@ public abstract class Usuario implements Serializable {
     @OneToMany(mappedBy = "usuario")
     private List<Mensaje> mensajes;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String cedula;
 
 }

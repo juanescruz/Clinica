@@ -12,7 +12,6 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @SuperBuilder
 // @PrimaryKeyJoinColumn(name = "medico_id")
@@ -31,7 +30,7 @@ public class Medico extends Usuario implements Serializable {
     @OneToMany(mappedBy = "medico")
     private List<Consulta> consultas;
 
-    @JoinColumn(nullable = true)
+    @JoinColumn
     @ManyToOne
     private Especialidad especialidad;
 

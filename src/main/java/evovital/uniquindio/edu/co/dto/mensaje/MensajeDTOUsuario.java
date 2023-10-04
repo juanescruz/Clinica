@@ -6,6 +6,7 @@ public record MensajeDTOUsuario(
 
             String mensaje,
             Long idUsuario,
-            LocalDateTime fechaYHora
+            LocalDateTime fechaYHora,
+            Long idPqrs
 ) {
 }

@@ -2,10 +2,11 @@ package evovital.uniquindio.edu.co.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
-import java.sql.Time;
 import java.time.DayOfWeek;
+import java.time.LocalTime;
 
 @Entity
 @Getter
@@ -13,6 +14,7 @@ import java.time.DayOfWeek;
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@SuperBuilder
 public class HorarioAtencion implements Serializable {
 
     @Id
@@ -24,10 +26,10 @@ public class HorarioAtencion implements Serializable {
     private DayOfWeek dia;
 
     @Column(nullable = false)
-    private Time inicio;
+    private LocalTime inicio;
 
     @Column(nullable = false)
-    private Time fin;
+    private LocalTime fin;
 
     @JoinColumn(nullable = false)
     @ManyToOne

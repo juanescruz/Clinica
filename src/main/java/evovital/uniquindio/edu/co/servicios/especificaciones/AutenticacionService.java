@@ -1,4 +1,4 @@
-package evovital.uniquindio.edu.co.servicios;
+package evovital.uniquindio.edu.co.servicios.especificaciones;
 
 public interface AutenticacionService {
 

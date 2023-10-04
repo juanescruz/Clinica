@@ -4,12 +4,7 @@ import evovital.uniquindio.edu.co.domain.Medico;
 import evovital.uniquindio.edu.co.domain.Usuario;
 import evovital.uniquindio.edu.co.repositories.MedicoRepository;
 import evovital.uniquindio.edu.co.repositories.UsuarioRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,11 +19,6 @@ public class MedicoController {
     public MedicoController(MedicoRepository medicoRepository, UsuarioRepository usuarioRepository) {
         this.medicoRepository = medicoRepository;
         this.usuarioRepository = usuarioRepository;
-    }
-
-    @GetMapping
-    public ResponseEntity<Page<Medico>> getMedicos(@PageableDefault(size = 10) Pageable paginacion) {
-        return ResponseEntity.ok(medicoRepository.findByEstaActivoTrue(paginacion));
     }
 
     @PostMapping

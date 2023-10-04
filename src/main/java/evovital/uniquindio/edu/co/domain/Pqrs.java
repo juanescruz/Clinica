@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Getter
@@ -29,5 +30,8 @@ public class Pqrs implements Serializable {
 
     @Column(nullable = false)
     private LocalDate fechaCreacion;
+
+    @OneToMany(mappedBy = "pqrs")
+    private List<Mensaje> mensajes;
 
 }

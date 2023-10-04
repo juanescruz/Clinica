@@ -1,4 +1,4 @@
-package evovital.uniquindio.edu.co.servicios;
+package evovital.uniquindio.edu.co.servicios.especificaciones;
 
 import evovital.uniquindio.edu.co.dto.atencionConsulta.AtencionConsultaDTOMedico;
 import evovital.uniquindio.edu.co.dto.consulta.ConsultaDTOMedico;

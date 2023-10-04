@@ -4,9 +4,9 @@ import java.time.LocalDate;
 
 public record PQRSDTOAdmin(
 
-        int codigo,
+        Long codigo,
         String estado,
-        LocalDate fechaYHora,
+        LocalDate fechaCreacion,
         String nombrePaciente
 
 ) {
