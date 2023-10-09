@@ -23,6 +23,7 @@ public class LoginController {
     @PostMapping()
     public ResponseEntity<Boolean> signIn(@RequestBody AuthLoginDto loginDto){
         System.out.println("loginDto.email() = " + loginDto.email() + " loginDto.password() = " + loginDto.password());
+        System.out.println("commit de prueba");
         return ResponseEntity.ok(usuarioService.login(loginDto));
 
     }
