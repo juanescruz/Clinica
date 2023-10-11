@@ -1,9 +1,11 @@
 package evovital.uniquindio.edu.co.servicios.especificaciones;
 
+import evovital.uniquindio.edu.co.domain.Administrador;
 import evovital.uniquindio.edu.co.domain.Medico;
 import evovital.uniquindio.edu.co.dto.consulta.ConsultaDTOAdmin;
 import evovital.uniquindio.edu.co.dto.horario.HorarioDTOActualizar;
 import evovital.uniquindio.edu.co.dto.horario.HorarioDTOCrear;
+import evovital.uniquindio.edu.co.dto.login.AuthLoginDto;
 import evovital.uniquindio.edu.co.dto.medico.InfoMedicoDTO;
 import evovital.uniquindio.edu.co.dto.medico.MedicoDTOActualizar;
 import evovital.uniquindio.edu.co.dto.medico.MedicoDTOCrear;
@@ -38,4 +40,7 @@ public interface AdministradorService {
 
     void actualizarHorario(Medico medico, HorarioDTOActualizar horario);
 
+    boolean isAdmin(AuthLoginDto loginDto);
+
+    Administrador signIn(AuthLoginDto loginDto);
 }

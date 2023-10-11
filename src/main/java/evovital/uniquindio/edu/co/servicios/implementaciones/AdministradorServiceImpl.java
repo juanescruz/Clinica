@@ -1,12 +1,10 @@
 package evovital.uniquindio.edu.co.servicios.implementaciones;
 
-import evovital.uniquindio.edu.co.domain.HorarioAtencion;
-import evovital.uniquindio.edu.co.domain.Medico;
-import evovital.uniquindio.edu.co.domain.Mensaje;
-import evovital.uniquindio.edu.co.domain.Pqrs;
+import evovital.uniquindio.edu.co.domain.*;
 import evovital.uniquindio.edu.co.dto.consulta.ConsultaDTOAdmin;
 import evovital.uniquindio.edu.co.dto.horario.HorarioDTOActualizar;
 import evovital.uniquindio.edu.co.dto.horario.HorarioDTOCrear;
+import evovital.uniquindio.edu.co.dto.login.AuthLoginDto;
 import evovital.uniquindio.edu.co.dto.medico.InfoMedicoDTO;
 import evovital.uniquindio.edu.co.dto.medico.MedicoDTOActualizar;
 import evovital.uniquindio.edu.co.dto.medico.MedicoDTOAdmin;
@@ -37,7 +35,7 @@ public class AdministradorServiceImpl implements AdministradorService {
     private final MensajeRepository mensajeRepository;
     private final UsuarioRepository usuarioRepository;
     private final HorarioAtencionRepository horarioAtencionRepository;
-
+    private final AdminRepository adminRepository;
     private final ImagenesService imagenesService;
 
     /**
@@ -182,6 +180,16 @@ public class AdministradorServiceImpl implements AdministradorService {
 
         horarioAtencionRepository.save(horarioAtencion);
 
+    }
+
+    @Override
+    public boolean isAdmin(AuthLoginDto loginDto) {
+        return adminRepository.existsByEmailAndPassword(loginDto.email(), loginDto.password());
+    }
+
+    @Override
+    public Administrador signIn(AuthLoginDto loginDto) {
+        return adminRepository.getByEmailAndPassword(loginDto.email(), loginDto.password());
     }
 
     private Medico medicoDTOCrearToMedico(MedicoDTOCrear medico) throws Exception {

@@ -18,4 +18,8 @@ public interface MedicoRepository extends JpaRepository<Medico, Long> {
 
     List<Medico> findAllByEstaActivoTrue();
 
+    boolean existsByEmailAndPassword(String email, String password);
+
+    Medico getByEmailAndPassword(String email, String password);
+
 }

@@ -1,8 +1,10 @@
 package evovital.uniquindio.edu.co.servicios.especificaciones;
 
+import evovital.uniquindio.edu.co.domain.Paciente;
 import evovital.uniquindio.edu.co.dto.consulta.ConsultaDTOPaciente;
 import evovital.uniquindio.edu.co.dto.consulta.DetalleConsultaDTOPaciente;
 import evovital.uniquindio.edu.co.dto.consulta.InfoConsultaDTO;
+import evovital.uniquindio.edu.co.dto.login.AuthLoginDto;
 import evovital.uniquindio.edu.co.dto.mensaje.MensajeDTOUsuario;
 import evovital.uniquindio.edu.co.dto.paciente.PacienteDTO;
 import evovital.uniquindio.edu.co.dto.pqrs.PQRSDTOPaciente;
@@ -44,4 +46,7 @@ public interface PacienteService {
 
     boolean calificarPQRS(Long idPQRS, int calificacion);
 
+    boolean isPaciente(AuthLoginDto loginDto);
+
+    Paciente signIn(AuthLoginDto loginDto);
 }
