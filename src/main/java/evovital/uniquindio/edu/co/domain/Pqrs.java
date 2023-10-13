@@ -2,6 +2,7 @@ package evovital.uniquindio.edu.co.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -13,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@SuperBuilder
 public class Pqrs implements Serializable {
 
     @Id

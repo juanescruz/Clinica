@@ -1,6 +1,6 @@
 package evovital.uniquindio.edu.co.dto.medico;
 
-import evovital.uniquindio.edu.co.dto.horario.HorarioDTOCrear;
+import evovital.uniquindio.edu.co.dto.horario.HorarioDTOActualizar;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ public record InfoMedicoDTO(
         String especialidad,
         String telefono,
         String correo,
-        List<HorarioDTOCrear> horarios
+        List<HorarioDTOActualizar> horarios
 
 ) {
 }

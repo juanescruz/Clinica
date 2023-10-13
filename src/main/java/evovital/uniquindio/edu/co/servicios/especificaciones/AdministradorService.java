@@ -28,7 +28,7 @@ public interface AdministradorService {
 
     List<PQRSDTOAdmin> listarPQRS() throws Exception;
 
-    String responderPQRS(Long idPqrs, MensajeDTOUsuario mensajeUsuario) throws Exception;
+    String responderPQRS(MensajeDTOUsuario mensajeUsuario) throws Exception;
 
     InfoPQRSDTO verDetallePQRS(int codigo) throws Exception;
 

@@ -2,7 +2,10 @@ package evovital.uniquindio.edu.co;
 
 import evovital.uniquindio.edu.co.dto.horario.HorarioDTOActualizar;
 import evovital.uniquindio.edu.co.dto.horario.HorarioDTOCrear;
+import evovital.uniquindio.edu.co.dto.medico.MedicoDTOActualizar;
+import evovital.uniquindio.edu.co.dto.medico.MedicoDTOAdmin;
 import evovital.uniquindio.edu.co.dto.medico.MedicoDTOCrear;
+import evovital.uniquindio.edu.co.dto.mensaje.MensajeDTOUsuario;
 import evovital.uniquindio.edu.co.servicios.especificaciones.AdministradorService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +18,65 @@ import java.util.List;
 // @Transactional
 public class AdminstradorTest {
 
+    // :D
+    // (._. )
+    // >~<
+    // (^_^)
+    // (TnT)
+    // (-_- )
+    // B)
+    // (@_@)
+    // (0-0)
+    // ( *o* )
     @Autowired
     private AdministradorService administradorService;
+
+    @Test
+    public void responderPQRSTest() {
+
+        try {
+            System.out.println(administradorService.responderPQRS(new MensajeDTOUsuario(
+                    "Hola, soy un mensaje de prueba",
+                    1L,
+                    1L
+            )));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
+    public void listarPqrsTest() {
+
+        try {
+            System.out.println(administradorService.listarPQRS());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
+    public void obtenerMedicoTest() {
+
+        try {
+            System.out.println(administradorService.obtenerMedico(1L));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
+    public void listarMedicosTest() {
+
+        try {
+            List<MedicoDTOAdmin> medicos = administradorService.listarMedicos();
+            System.out.println(medicos);
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 
     @Test
     public void eliminarMedicoTest() {
@@ -37,7 +97,7 @@ public class AdminstradorTest {
         }};
 
         try {
-            administradorService.actualizarMedico(1L, new evovital.uniquindio.edu.co.dto.medico.MedicoDTOActualizar(
+            administradorService.actualizarMedico(1L, new MedicoDTOActualizar(
                     1L,
                     "1234567",
                     "Juan",
@@ -63,9 +123,9 @@ public class AdminstradorTest {
         }};
 
         MedicoDTOCrear medico = new MedicoDTOCrear(
-                "1234567",
-                "Juan",
-                "Perez2",
+                "12345678",
+                "JuanE",
+                "Perez2@gmail.com",
                 "holaMundo",
                 "Bogotá",
                 "1234567",

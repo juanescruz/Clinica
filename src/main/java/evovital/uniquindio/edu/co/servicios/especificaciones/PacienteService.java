@@ -24,9 +24,9 @@ public interface PacienteService {
 
     boolean cambiarPassword(int idPaciente, String password);
 
-    void agendarCita(InfoConsultaDTO consultaDTO);
+    void agendarConsulta(InfoConsultaDTO consultaDTO);
 
-    void crearPQR(PQRSDTOPacienteReq pqrsPaciente);
+    void crearPQRS(PQRSDTOPacienteReq pqrsPaciente);
 
     List<PQRSDTOPaciente> listarPQRSPaciente(Long idPaciente);
 

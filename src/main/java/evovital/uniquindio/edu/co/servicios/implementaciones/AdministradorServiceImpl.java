@@ -18,17 +18,18 @@ import evovital.uniquindio.edu.co.repositories.*;
 import evovital.uniquindio.edu.co.servicios.especificaciones.AdministradorService;
 import evovital.uniquindio.edu.co.servicios.especificaciones.ImagenesService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.DayOfWeek;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service // indica que esta clase es un servicio de manera semantica, se puede usar el "@Component"
 @RequiredArgsConstructor // genera un constructor con los atributos "final"
-@Transactional() // indica que las transacciones de esta clase son de solo lectura
 public class AdministradorServiceImpl implements AdministradorService {
 
     private final MedicoRepository medicoRepository;
@@ -123,32 +124,43 @@ public class AdministradorServiceImpl implements AdministradorService {
         return medicoRepository.findAllByEstaActivoTrue().stream().map(this::medicoToMedicoDTOAdmin).collect(Collectors.toList());
     }
 
+    /**
+     * Obtiene la informacion de un medico en especifico
+     * @param codigo
+     * @return
+     * @throws Exception
+     */
+    @Transactional
     @Override
     public InfoMedicoDTO obtenerMedico(Long codigo) throws Exception {
-
         return medicoToInfoMedicoDTO(
-                medicoRepository.findById(codigo).orElseThrow(
-                        () -> new Exception("No se encontró el medico que se quiere obtener")
-                )
+                medicoRepository.findById(codigo).orElseThrow(() -> new Exception("No se encontró el medico que se quiere obtener"))
         );
-
     }
 
+    /**
+     * Lista todas las PQRS que estan con estado "En proceso" en la base de datos
+     * @return
+     * @throws Exception
+     */
     @Override
     public List<PQRSDTOAdmin> listarPQRS() throws Exception {
 
         if (pqrsRepository.count() == 0) throw new Exception("No hay PQRS para listar");
 
-        return pqrsRepository.findAll().stream().map(this::pqrsToPQRSDTOAdmin).collect(Collectors.toList());
-
+        return pqrsRepository.findAllByEstadoPqrs_Estado("En proceso").stream().map(this::pqrsToPQRSDTOAdmin).collect(Collectors.toList());
     }
 
+    /**
+     * Responde una PQRS y devuelve el mensaje que se acaba de responder
+     * @param mensajeUsuario
+     * @return
+     * @throws Exception
+     */
     @Override
-    public String responderPQRS(Long idPqrs, MensajeDTOUsuario mensajeUsuario) throws Exception {
+    public String responderPQRS(MensajeDTOUsuario mensajeUsuario) throws Exception {
 
-        Pqrs pqrs = pqrsRepository.findById(idPqrs).orElseThrow(() -> new Exception("No se encontro la PQRS"));
         Mensaje mensaje = mensajeDTOToMensaje(mensajeUsuario);
-        mensaje.setPqrs(pqrs);
         mensajeRepository.save(mensaje);
 
         return mensaje.getContenido();
@@ -226,7 +238,7 @@ public class AdministradorServiceImpl implements AdministradorService {
                 medico.getTelefono(),
                 medico.getUrlFotoPersonal(),
                 medico.getEspecialidad().getId(),
-                medico.getHorarios().stream().map(this::horarioAtencionToHorarioDTO).collect(Collectors.toList())
+                medico.getHorarios().stream().map(this::horarioAtencionToHorarioDTOCrear).collect(Collectors.toList())
         );
     }
 
@@ -239,8 +251,17 @@ public class AdministradorServiceImpl implements AdministradorService {
                         .build();
     }
 
-    private HorarioDTOCrear horarioAtencionToHorarioDTO(HorarioAtencion horario) {
+    private HorarioDTOCrear horarioAtencionToHorarioDTOCrear(HorarioAtencion horario) {
         return new HorarioDTOCrear(
+                (byte) horario.getDia().getValue(),
+                horario.getInicio().toString(),
+                horario.getFin().toString()
+        );
+    }
+
+    private HorarioDTOActualizar horarioAtencionToHorarioDTOActualizar(HorarioAtencion horario) {
+        return new HorarioDTOActualizar(
+                horario.getId(),
                 (byte) horario.getDia().getValue(),
                 horario.getInicio().toString(),
                 horario.getFin().toString()
@@ -264,7 +285,7 @@ public class AdministradorServiceImpl implements AdministradorService {
                 medico.getEspecialidad().getNombre(),
                 medico.getTelefono(),
                 medico.getEmail(),
-                medico.getHorarios().stream().map(this::horarioAtencionToHorarioDTO).collect(Collectors.toList())
+                medico.getHorarios().stream().map(this::horarioAtencionToHorarioDTOActualizar).collect(Collectors.toList())
         );
     }
 
@@ -289,7 +310,7 @@ public class AdministradorServiceImpl implements AdministradorService {
     private Mensaje mensajeDTOToMensaje(MensajeDTOUsuario mensaje) {
         return Mensaje.builder()
                 .contenido(mensaje.mensaje())
-                .horaYFecha(mensaje.fechaYHora())
+                .horaYFecha(LocalDateTime.now())
                 .pqrs(pqrsRepository.findById(mensaje.idPqrs()).orElseThrow(() -> new RuntimeException("No se encontro la PQRS")))
                 .usuario(usuarioRepository.findById(mensaje.idUsuario()).orElseThrow(() -> new RuntimeException("No se encontro el usuario")))
                 .build();

@@ -1,5 +1,7 @@
 package evovital.uniquindio.edu.co.dto.paciente;
 
+import evovital.uniquindio.edu.co.domain.Paciente;
+
 import java.time.LocalDate;
 
 public record PacienteDTO(
@@ -17,4 +19,20 @@ public record PacienteDTO(
         String fotoPersonal
 
 ) {
+    public Paciente toEntity() {
+
+        return Paciente.builder()
+                .alergias(alergias)
+                .eps(eps)
+                .ciudadResidencia(ciudadResidencia)
+                .fechaNacimiento(fechaNacimiento)
+                .nombre(nombre)
+                .telefono(telefono)
+                .tipoSangre(tipoSangre)
+                .cedula(cedula)
+                .email(email)
+                .password(password)
+                .build();
+
+    }
 }
