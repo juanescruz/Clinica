@@ -29,7 +29,7 @@ public class Consulta implements Serializable {
     @OneToOne (mappedBy = "consulta")
     private Pqrs pqrs;
 
-    @OneToOne
+    @OneToOne (mappedBy = "consulta")
     private AtencionConsulta atencionConsulta;
 
     @JoinColumn(nullable = false)

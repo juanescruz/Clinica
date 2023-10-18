@@ -19,7 +19,7 @@ public class AtencionConsulta implements Serializable {
     private Long id;
 
     @JoinColumn(nullable = false)
-    @OneToOne (mappedBy = "atencionConsulta")
+    @OneToOne
     private Consulta consulta;
 
     @Column(nullable = false)
