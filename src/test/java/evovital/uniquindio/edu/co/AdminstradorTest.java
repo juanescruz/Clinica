@@ -32,6 +32,54 @@ public class AdminstradorTest {
     private AdministradorService administradorService;
 
     @Test
+    public void actualizarHorarioTest() {
+
+        try {
+
+            Long idHorario = administradorService.actualizarHorario(1L, new HorarioDTOActualizar(1L, (byte) 5, "08:00", "18:00"));
+            System.out.println(idHorario);
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @Test
+    public void crearHorarioTest() {
+
+        try {
+
+            Long idHorario = administradorService.crearHorario(1L, new HorarioDTOCrear((byte) 1, "08:00", "18:00"));
+            System.out.println(idHorario);
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @Test
+    public void listarConsultasTest() {
+
+        try {
+            System.out.println(administradorService.listarConsultas());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
+    public void verDetallePQRSTest() {
+
+        try {
+            System.out.println(administradorService.verDetallePQRS(1L));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
     public void responderPQRSTest() {
 
         try {
@@ -97,7 +145,7 @@ public class AdminstradorTest {
         }};
 
         try {
-            administradorService.actualizarMedico(1L, new MedicoDTOActualizar(
+            administradorService.actualizarMedico(new MedicoDTOActualizar(
                     1L,
                     "1234567",
                     "Juan",

@@ -38,6 +38,7 @@ public class AdministradorServiceImpl implements AdministradorService {
     private final MensajeRepository mensajeRepository;
     private final UsuarioRepository usuarioRepository;
     private final HorarioAtencionRepository horarioAtencionRepository;
+    private final ConsultaRepository consultaRepository;
 
     private final ImagenesService imagenesService;
 
@@ -58,7 +59,7 @@ public class AdministradorServiceImpl implements AdministradorService {
 
         if (!medico.horarios().isEmpty())
             medico.horarios().forEach(
-                    horario -> crearHorario(medicoRegistrado, horario)
+                    horario -> crearHorario(medicoRegistrado.getId(), horario)
             );
 
         return medicoRegistrado.getId();
@@ -72,9 +73,9 @@ public class AdministradorServiceImpl implements AdministradorService {
      * @throws Exception
      */
     @Override
-    public Long actualizarMedico(Long codigo, MedicoDTOActualizar medico) throws Exception {
+    public Long actualizarMedico(MedicoDTOActualizar medico) throws Exception {
 
-        Medico medicoEncontrado = medicoRepository.findById(codigo).orElseThrow(() -> new Exception("No se encontró el medico que se quiere actualizar"));
+        Medico medicoEncontrado = medicoRepository.findById(medico.id()).orElseThrow(() -> new Exception("No se encontró el medico que se quiere actualizar"));
 
         if (!medicoEncontrado.getCedula().equals(medico.cedula()))
             medicoRepository.findByCedula(medico.cedula()).ifPresent(m -> {
@@ -86,11 +87,13 @@ public class AdministradorServiceImpl implements AdministradorService {
                 throw new RuntimeException("Ya existe un medico con ese email");
             });
 
-        Medico medicoActualizado = medicoRepository.save(medicoDTOActualizarToMedico(medico));
+        medicoEncontrado = medicoDTOActualizarToMedico(medico);
+
+        Medico medicoActualizado = medicoRepository.save(medicoEncontrado);
 
         if (!medico.horarios().isEmpty())
             medico.horarios().forEach(
-                    horario -> actualizarHorario(medicoActualizado, horario)
+                    horario -> actualizarHorario(medicoActualizado.getId(), horario)
             );
 
         return medicoActualizado.getId();
@@ -167,32 +170,61 @@ public class AdministradorServiceImpl implements AdministradorService {
 
     }
 
+    /**
+     * Obtiene la informacion de una PQRS en especifico con sus mensajes incluidos
+     * @param idPQRS
+     * @return
+     * @throws Exception
+     */
+    @Transactional
     @Override
-    public InfoPQRSDTO verDetallePQRS(int codigo) throws Exception {
-        return null;
+    public InfoPQRSDTO verDetallePQRS(Long idPQRS) throws Exception {
+        return new InfoPQRSDTO(pqrsRepository.findById(idPQRS).orElseThrow(() -> new Exception("No se encontro la PQRS")));
     }
 
+    /**
+     * Lista todas las consultas que estan en la base de datos
+     * @return
+     * @throws Exception
+     */
     @Override
-    public List<ConsultaDTOAdmin> listarCitas() throws Exception {
-        return null;
+    public List<ConsultaDTOAdmin> listarConsultas() throws Exception {
+
+        if (consultaRepository.count() == 0) throw new Exception("No hay consultas para listar");
+
+        return consultaRepository.findAll().stream().map(consulta -> new ConsultaDTOAdmin(consulta)).toList();
     }
 
+    /**
+     * crea un horario para un medico en particular
+     * @param idMedico
+     * @param horario
+     * @return el id del horario que se acaba de crear
+     */
     @Override
-    public void crearHorario(Medico medico, HorarioDTOCrear horario) {
+    public Long crearHorario(Long idMedico, HorarioDTOCrear horario) {
 
         HorarioAtencion horarioAtencion = horarioDTOToHorarioAtencion(horario);
-        horarioAtencion.setMedico(medico);
+        horarioAtencion.setMedico(medicoRepository.findById(idMedico).orElseThrow(() -> new RuntimeException("No se encontro el medico")));
 
-        horarioAtencionRepository.save(horarioAtencion);
+        HorarioAtencion horarioAtencionCreado = horarioAtencionRepository.save(horarioAtencion);
+        return horarioAtencionCreado.getId();
     }
 
+    /**
+     * Actualiza un horario de un medico en particular
+     * @param idMedico
+     * @param horario
+     * @return el id del horario que se acaba de actualizar
+     */
     @Override
-    public void actualizarHorario(Medico medico, HorarioDTOActualizar horario) {
+    public Long actualizarHorario(Long idMedico, HorarioDTOActualizar horario) {
 
         HorarioAtencion horarioAtencion = horarioDTOActualizarToHorarioAtencion(horario);
-        horarioAtencion.setMedico(medico);
+        horarioAtencion.setMedico(medicoRepository.findById(idMedico).orElseThrow(() -> new RuntimeException("No se encontro el medico")));
 
-        horarioAtencionRepository.save(horarioAtencion);
+        HorarioAtencion horarioAtencionActualizado = horarioAtencionRepository.save(horarioAtencion);
+        return horarioAtencionActualizado.getId();
 
     }
 

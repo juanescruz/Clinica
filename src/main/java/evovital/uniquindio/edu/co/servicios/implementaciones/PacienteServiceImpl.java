@@ -27,39 +27,71 @@ public class PacienteServiceImpl implements PacienteService {
     private final ConsultaRepository consultaRepository;
     private final MensajeRepository mensajeRepository;
     private final UsuarioRepository usuarioRepository;
-    private final PacienteRepository pacienteReposotory;
+    private final PacienteRepository pacienteRepository;
     private final EstadoConsultaRepository estadoConsultaRepository;
     private final MedicoRepository medicoRepository;
 
     private final ImagenesService imagenesService;
 
+    /**
+     * Registra un nuevo paciente en la base de datos y en el sistema
+     * @param pacienteDTO
+     * @return
+     */
     @Override
-    public boolean registrarse(PacienteDTO pacienteDTO) {
+    public Long registrarse(PacienteDTO pacienteDTO) {
 
         Paciente paciente = pacienteDTO.toEntity();
         paciente.setFotoPersonal(imagenesService.subirImagen(imagenesService.convertirImagen(pacienteDTO.fotoPersonal())));
 
-        paciente = pacienteReposotory.save(paciente);
-        return true;
+        paciente = pacienteRepository.save(paciente);
+        return paciente.getId();
     }
 
+    /**
+     * Edita el perfil del paciente en el sistema
+     * @param idPaciente
+     * @param pacienteDTO
+     * @return
+     * @throws Exception
+     */
     @Override
-    public boolean editarPerfil(int idPaciente, PacienteDTO pacienteDTO) {
-        return false;
+    public Long editarPerfil(Long idPaciente, PacienteDTO pacienteDTO) throws Exception {
+
+        Paciente pacienteEncontrado = pacienteRepository.findById(idPaciente).orElseThrow( () -> new Exception("No se encontró el paciente"));
+
+        if (!pacienteEncontrado.getCedula().equals(pacienteDTO.cedula()))
+            pacienteRepository.findByCedula(pacienteDTO.cedula()).ifPresent(m -> {
+                throw new RuntimeException("Ya existe un paciente con esa cedula");
+            });
+
+        if (!pacienteEncontrado.getEmail().equals(pacienteDTO.email()))
+            pacienteRepository.findByEmail(pacienteDTO.email()).ifPresent(m -> {
+                throw new RuntimeException("Ya existe un paciente con ese email");
+            });
+
+        Paciente paciente = pacienteDTO.toEntity();
+        paciente.setFotoPersonal(imagenesService.subirImagen(imagenesService.convertirImagen(pacienteDTO.fotoPersonal())));
+        paciente.setId(idPaciente);
+
+        return pacienteRepository.save(paciente).getId();
+
     }
 
+    // TODO: implementar luego de cambiar la propiedad "estaActivo" de Medico a Usuario
     @Override
-    public PacienteDTO eliminarCuenta(int idPaciente) {
+    public PacienteDTO eliminarCuenta(Long idPaciente) {
         return null;
     }
 
+    // TODO: implementar luego de el servicio de emails
     @Override
     public boolean enviarLinkRecuperacion(String emailPaciente) {
         return false;
     }
 
     @Override
-    public boolean cambiarPassword(int idPaciente, String password) {
+    public boolean cambiarPassword(Long idPaciente, String password) {
         return false;
     }
 
@@ -71,7 +103,7 @@ public class PacienteServiceImpl implements PacienteService {
     public void agendarConsulta(InfoConsultaDTO consultaDTO) {
 
         Consulta consulta = consultaDTO.toEntity();
-        consulta.setPaciente(pacienteReposotory.findById(consultaDTO.idPaciente()).orElseThrow(() -> new RuntimeException("No se encontró el paciente")));
+        consulta.setPaciente(pacienteRepository.findById(consultaDTO.idPaciente()).orElseThrow(() -> new RuntimeException("No se encontró el paciente")));
         consulta.setEstadoConsulta(estadoConsultaRepository.findByEstado("Pendiente"));
         consulta.setMedico(medicoRepository.findById(consultaDTO.idMedico()).orElseThrow(() -> new RuntimeException("No se encontró el medico")));
 

@@ -23,7 +23,7 @@ public class Pqrs implements Serializable {
     private Long id;
 
     @JoinColumn(nullable = false)
-    @OneToOne (mappedBy = "pqrs")
+    @OneToOne
     private Consulta consulta;
 
     @JoinColumn(nullable = false)

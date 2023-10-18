@@ -34,6 +34,7 @@ public class Medico extends Usuario implements Serializable {
     @ManyToOne
     private Especialidad especialidad;
 
+    // TODO: poner el está activo en el usuario y quitarlo de aquí
     @Column(nullable = false, length = 1)
     private boolean estaActivo;
 

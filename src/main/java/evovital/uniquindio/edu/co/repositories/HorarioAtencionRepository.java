@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository("HorarioAtencionRepository")
 public interface HorarioAtencionRepository extends JpaRepository<HorarioAtencion, Long> {
+
 }

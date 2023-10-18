@@ -26,7 +26,7 @@ public class Consulta implements Serializable {
     @ManyToOne
     private Medico medico;
 
-    @OneToOne
+    @OneToOne (mappedBy = "consulta")
     private Pqrs pqrs;
 
     @OneToOne

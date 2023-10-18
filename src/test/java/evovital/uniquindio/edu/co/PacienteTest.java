@@ -19,6 +19,32 @@ public class PacienteTest {
     private PacienteService pacienteService;
 
     @Test
+    public void editarPerfilTest() {
+        try {
+            System.out.println(
+                    pacienteService.editarPerfil(
+                        2L,
+                        new PacienteDTO(
+                                "Paciente",
+                                "12345678",
+                                "hola2@gmail.com",
+                                "123456789",
+                                LocalDate.now(),
+                                "Alergias",
+                                "EPS",
+                                "O-",
+                                "Cali",
+                                "12345678",
+                                "1100000101010100101110101001010100101010101010101111001010001010010100010100101"
+                        )
+                    )
+            );
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
     public void registrarseTest() {
         try {
             pacienteService.registrarse(

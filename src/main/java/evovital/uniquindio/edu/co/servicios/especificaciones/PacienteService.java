@@ -14,15 +14,15 @@ import java.util.List;
 
 public interface PacienteService {
 
-    boolean registrarse(PacienteDTO pacienteDTO);
+    Long registrarse(PacienteDTO pacienteDTO);
 
-    boolean editarPerfil(int idPaciente, PacienteDTO pacienteDTO);
+    Long editarPerfil(Long idPaciente, PacienteDTO pacienteDTO) throws Exception;
 
-    PacienteDTO eliminarCuenta(int idPaciente);
+    PacienteDTO eliminarCuenta(Long idPaciente);
 
     boolean enviarLinkRecuperacion(String emailPaciente);
 
-    boolean cambiarPassword(int idPaciente, String password);
+    boolean cambiarPassword(Long idPaciente, String password);
 
     void agendarConsulta(InfoConsultaDTO consultaDTO);
 
