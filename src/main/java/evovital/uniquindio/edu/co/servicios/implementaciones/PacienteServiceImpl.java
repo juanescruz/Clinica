@@ -12,6 +12,7 @@ import evovital.uniquindio.edu.co.repositories.*;
 import evovital.uniquindio.edu.co.servicios.especificaciones.ImagenesService;
 import evovital.uniquindio.edu.co.servicios.especificaciones.PacienteService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -42,6 +43,7 @@ public class PacienteServiceImpl implements PacienteService {
     public Long registrarse(PacienteDTO pacienteDTO) {
 
         Paciente paciente = pacienteDTO.toEntity();
+        paciente.setPassword(new BCryptPasswordEncoder().encode(paciente.getPassword()));
         // TODO: paciente.setFotoPersonal(imagenesService.subirImagen());
 
         paciente = pacienteRepository.save(paciente);

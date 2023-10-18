@@ -1,7 +1,10 @@
 package evovital.uniquindio.edu.co.servicios.especificaciones;
 
+import evovital.uniquindio.edu.co.dto.auxiliar.TokenDTO;
+import evovital.uniquindio.edu.co.dto.login.AuthLoginDto;
+
 public interface AutenticacionService {
 
-    boolean login(String email, String contraseña) throws Exception;
+    TokenDTO login(AuthLoginDto loginDTO) throws Exception;
 
 }

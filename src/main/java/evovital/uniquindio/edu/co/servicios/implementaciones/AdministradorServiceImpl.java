@@ -19,6 +19,7 @@ import evovital.uniquindio.edu.co.servicios.especificaciones.AdministradorServic
 import evovital.uniquindio.edu.co.servicios.especificaciones.ImagenesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -56,7 +57,10 @@ public class AdministradorServiceImpl implements AdministradorService {
             throw new RuntimeException("Ya existe un medico con esa cedula o ese email");
         });
 
-        Medico medicoRegistrado = medicoRepository.save(medicoDTOCrearToMedico(medico));
+        Medico medicoAux = medicoDTOCrearToMedico(medico);
+        medicoAux.setPassword(new BCryptPasswordEncoder().encode(medico.password()));
+
+        Medico medicoRegistrado = medicoRepository.save(medicoAux);
 
         if (!medico.horarios().isEmpty())
             medico.horarios().forEach(
@@ -236,7 +240,6 @@ public class AdministradorServiceImpl implements AdministradorService {
                 .cedula(medico.cedula())
                 .nombre(medico.nombre())
                 .email(medico.email())
-                .password(medico.password())
                 .ciudadResidencia(medico.ciudadResidencia())
                 .telefono(medico.telefono())
                 // TODO: .urlFotoPersonal(imagenesService.subirImagen())
