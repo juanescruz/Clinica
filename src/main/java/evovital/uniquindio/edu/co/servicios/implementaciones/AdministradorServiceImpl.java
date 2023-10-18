@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
@@ -238,7 +239,7 @@ public class AdministradorServiceImpl implements AdministradorService {
                 .password(medico.password())
                 .ciudadResidencia(medico.ciudadResidencia())
                 .telefono(medico.telefono())
-                .urlFotoPersonal(imagenesService.subirImagen(imagenesService.convertirImagen(medico.fotoPersonal())))
+                // TODO: .urlFotoPersonal(imagenesService.subirImagen())
                 .especialidad(especialidadRepository.findById(medico.idEspecialidad()).orElseThrow(() -> new Exception("No se encontro la especialidad")))
                 .build();
     }
@@ -254,7 +255,7 @@ public class AdministradorServiceImpl implements AdministradorService {
                 .password(medico.password())
                 .ciudadResidencia(medico.ciudadResidencia())
                 .telefono(medico.telefono())
-                .urlFotoPersonal(imagenesService.subirImagen(imagenesService.convertirImagen(medico.fotoPersonal())))
+                //TODO: .urlFotoPersonal(imagenesService.subirImagen())
                 .especialidad(especialidadRepository.findById(medico.idEspecialidad()).orElseThrow(() -> new Exception("No se encontro la especialidad")))
                 .build();
     }

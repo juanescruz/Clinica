@@ -42,7 +42,7 @@ public class PacienteServiceImpl implements PacienteService {
     public Long registrarse(PacienteDTO pacienteDTO) {
 
         Paciente paciente = pacienteDTO.toEntity();
-        paciente.setFotoPersonal(imagenesService.subirImagen(imagenesService.convertirImagen(pacienteDTO.fotoPersonal())));
+        // TODO: paciente.setFotoPersonal(imagenesService.subirImagen());
 
         paciente = pacienteRepository.save(paciente);
         return paciente.getId();
@@ -71,7 +71,7 @@ public class PacienteServiceImpl implements PacienteService {
             });
 
         Paciente paciente = pacienteDTO.toEntity();
-        paciente.setFotoPersonal(imagenesService.subirImagen(imagenesService.convertirImagen(pacienteDTO.fotoPersonal())));
+        // TODO: paciente.setFotoPersonal(imagenesService.subirImagen());
         paciente.setId(idPaciente);
 
         return pacienteRepository.save(paciente).getId();
