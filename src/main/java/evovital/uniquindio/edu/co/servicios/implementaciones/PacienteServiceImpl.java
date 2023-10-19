@@ -1,6 +1,7 @@
 package evovital.uniquindio.edu.co.servicios.implementaciones;
 
 import evovital.uniquindio.edu.co.domain.*;
+import evovital.uniquindio.edu.co.dto.auxiliar.EmailDTO;
 import evovital.uniquindio.edu.co.dto.consulta.ConsultaDTOPaciente;
 import evovital.uniquindio.edu.co.dto.consulta.DetalleConsultaDTOPaciente;
 import evovital.uniquindio.edu.co.dto.consulta.InfoConsultaDTO;
@@ -9,6 +10,7 @@ import evovital.uniquindio.edu.co.dto.paciente.PacienteDTO;
 import evovital.uniquindio.edu.co.dto.pqrs.PQRSDTOPaciente;
 import evovital.uniquindio.edu.co.dto.pqrs.PQRSDTOPacienteReq;
 import evovital.uniquindio.edu.co.repositories.*;
+import evovital.uniquindio.edu.co.servicios.especificaciones.EmailService;
 import evovital.uniquindio.edu.co.servicios.especificaciones.ImagenesService;
 import evovital.uniquindio.edu.co.servicios.especificaciones.PacienteService;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +35,7 @@ public class PacienteServiceImpl implements PacienteService {
     private final MedicoRepository medicoRepository;
 
     private final ImagenesService imagenesService;
+    private final EmailService emailService;
 
     /**
      * Registra un nuevo paciente en la base de datos y en el sistema
@@ -73,6 +76,7 @@ public class PacienteServiceImpl implements PacienteService {
             });
 
         Paciente paciente = pacienteDTO.toEntity();
+        paciente.setPassword(new BCryptPasswordEncoder().encode(paciente.getPassword()));
         // TODO: paciente.setFotoPersonal(imagenesService.subirImagen());
         paciente.setId(idPaciente);
 
@@ -86,15 +90,40 @@ public class PacienteServiceImpl implements PacienteService {
         return null;
     }
 
-    // TODO: implementar luego de el servicio de emails
+    /**
+     * Envia un email al paciente con un link para recuperar su contraseña
+     * @param emailPaciente
+     */
     @Override
-    public boolean enviarLinkRecuperacion(String emailPaciente) {
-        return false;
+    public void enviarLinkRecuperacion(String emailPaciente) {
+
+        try {
+            emailService.enviarEmail(new EmailDTO(
+                    emailPaciente,
+                    "Recuperación de contraseña",
+                    "Hola, para recuperar tu contraseña ingresa al siguiente link: http://localhost:8080/recuperar-contrasena/%d".formatted(
+                            pacienteRepository.findByEmail(emailPaciente).orElseThrow(() -> new RuntimeException("No se encontró el paciente")).getId()
+                    )
+            ));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
+    /**
+     * Cambia la contraseña del paciente
+     * @param idPaciente
+     * @param newPassword
+     */
     @Override
-    public boolean cambiarPassword(Long idPaciente, String password) {
-        return false;
+    public void cambiarPassword(Long idPaciente, String newPassword) {
+
+        Paciente pacienteEncontrado = pacienteRepository.findById(idPaciente).orElseThrow(() -> new RuntimeException("No se encontró el paciente"));
+
+        pacienteEncontrado.setPassword(new BCryptPasswordEncoder().encode(newPassword));
+        pacienteRepository.save(pacienteEncontrado);
+
     }
 
     /**
@@ -130,43 +159,104 @@ public class PacienteServiceImpl implements PacienteService {
 
     }
 
+    /**
+     * Lista todas las PQRS del paciente
+     * @param idPaciente
+     * @return
+     */
     @Override
     public List<PQRSDTOPaciente> listarPQRSPaciente(Long idPaciente) {
-        return null;
+
+        List<Pqrs> pqrsPaciente = pqrsRepository.findAllByConsulta_Paciente_Id(idPaciente);
+
+        return pqrsPaciente.stream().map(PQRSDTOPaciente::new).toList();
+
     }
 
+    /**
+     * Responde una PQRS respondida por el administrador
+     * @param mensajeUsuario
+     * @return
+     */
     @Override
-    public void responderPQRS(Long idPQRS, MensajeDTOUsuario mensajeUsuario) {
+    public Long responderPQRS(MensajeDTOUsuario mensajeUsuario) {
 
+        Mensaje mensaje = mensajeUsuario.toEntity();
+        mensaje.setUsuario(usuarioRepository.findById(mensajeUsuario.idUsuario()).orElseThrow(() -> new RuntimeException("No se encontró el usuario")));
+        mensaje.setPqrs(pqrsRepository.findById(mensajeUsuario.idPqrs()).orElseThrow(() -> new RuntimeException("No se encontró el pqrs")));
+
+        return mensajeRepository.save(mensaje).getId();
     }
 
+    /**
+     * Lista todas las consultas que ha hecho un paciente en especifico
+     * @param idPaciente
+     * @return
+     */
     @Override
     public List<ConsultaDTOPaciente> listarConsultasPaciente(Long idPaciente) {
-        return null;
+        return consultaRepository.findAllByPaciente_Id(idPaciente).stream().map(ConsultaDTOPaciente::new).toList();
     }
 
+    /**
+     * trae todas las consultas de un paciente que haya hecho en una fecha en especifico
+     * @param idPaciente
+     * @param fecha
+     * @return
+     */
     @Override
     public List<ConsultaDTOPaciente> filtrarConsultasPorFecha(Long idPaciente, LocalDate fecha) {
-        return null;
+        return consultaRepository.findAllByPaciente_IdAndFechaCreacion(idPaciente, fecha).stream().map(ConsultaDTOPaciente::new).toList();
     }
 
+    /**
+     * trae todas las consultas de una paciente que haya agendado con un medico en particular
+     * @param idPaciente
+     * @param idMedico
+     * @return
+     */
     @Override
     public List<ConsultaDTOPaciente> filtarConsultasPorMedico(Long idPaciente, Long idMedico) {
-        return null;
+        return consultaRepository.findAllByPaciente_IdAndMedico_Id(idPaciente, idMedico).stream().map(ConsultaDTOPaciente::new).toList();
     }
 
+    /**
+     * obtiene el detalle de una consulta en especifico
+     * @param idConsulta
+     * @return
+     */
     @Override
     public DetalleConsultaDTOPaciente verDetalleConsulta(Long idConsulta) {
-        return null;
+        return consultaRepository.findById(idConsulta).orElseThrow(() -> new RuntimeException("No se encontró la consulta")).toDetalleConsultaDTOPaciente();
     }
 
+    /**
+     * reagenda una consulta en especifico
+     * @param idConsulta
+     * @param fechaYHora
+     * @return
+     */
     @Override
-    public boolean reagendarConsulta(Long idConsulta, LocalDateTime fechaYHora) {
-        return false;
+    public Long reagendarConsulta(Long idConsulta, LocalDateTime fechaYHora) {
+
+        Consulta consultaEncontrada = consultaRepository.findById(idConsulta).orElseThrow(() -> new RuntimeException("No se encontró la consulta"));
+        consultaEncontrada.setFechaYHoraAtencion(fechaYHora);
+
+        return consultaRepository.save(consultaEncontrada).getId();
+
     }
 
+    /**
+     * califica una PQRS en especifico
+     * @param idPQRS
+     * @param calificacion
+     * @return
+     */
     @Override
-    public boolean calificarPQRS(Long idPQRS, int calificacion) {
-        return false;
+    public Long calificarPQRS(Long idPQRS, int calificacion) {
+        Pqrs pqrsEncontrada = pqrsRepository.findById(idPQRS).orElseThrow(() -> new RuntimeException("No se encontró la pqrs"));
+        pqrsEncontrada.setCalificacion(calificacion);
+
+        return pqrsRepository.save(pqrsEncontrada).getId();
     }
 }

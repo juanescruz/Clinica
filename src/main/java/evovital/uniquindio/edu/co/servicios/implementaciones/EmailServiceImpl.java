@@ -14,6 +14,11 @@ public class EmailServiceImpl implements EmailService {
 
     private final JavaMailSender javaMailSender;
 
+    /**
+     * Envia un correo electronico
+     * @param emailDTO
+     * @throws Exception
+     */
     @Override
     public void enviarEmail(EmailDTO emailDTO) throws Exception {
 

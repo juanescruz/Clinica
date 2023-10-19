@@ -1,5 +1,6 @@
 package evovital.uniquindio.edu.co.domain;
 
+import evovital.uniquindio.edu.co.dto.consulta.DetalleConsultaDTOPaciente;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -50,4 +51,17 @@ public class Consulta implements Serializable {
     @Column(nullable = false)
     private String motivo;
 
+    public DetalleConsultaDTOPaciente toDetalleConsultaDTOPaciente() {
+
+        return new DetalleConsultaDTOPaciente(
+                medico.toMedicoDTOPaciente(),
+                pqrs.toPQRSDTOPaciente(),
+                atencionConsulta.toAtencionConsultaDTOPaciente(),
+                fechaCreacion,
+                fechaYHoraAtencion,
+                estadoConsulta.getEstado(),
+                motivo
+        );
+
+    }
 }

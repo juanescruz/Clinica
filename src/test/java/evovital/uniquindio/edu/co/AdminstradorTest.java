@@ -173,7 +173,7 @@ public class AdminstradorTest {
         MedicoDTOCrear medico = new MedicoDTOCrear(
                 "12345678",
                 "JuanE",
-                "Perez2@gmail.com",
+                "osmajuan760@gmail.com",
                 "holaMundo",
                 "Bogotá",
                 "1234567",

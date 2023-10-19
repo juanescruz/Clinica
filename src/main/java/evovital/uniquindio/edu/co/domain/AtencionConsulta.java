@@ -1,7 +1,9 @@
 package evovital.uniquindio.edu.co.domain;
 
+import evovital.uniquindio.edu.co.dto.atencionConsulta.AtencionConsultaDTOPaciente;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 
@@ -10,6 +12,7 @@ import java.io.Serializable;
 @Setter
 @ToString
 @NoArgsConstructor
+@SuperBuilder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class AtencionConsulta implements Serializable {
 
@@ -34,4 +37,13 @@ public class AtencionConsulta implements Serializable {
     @Column(nullable = false)
     private String notasMedicas;
 
+    public AtencionConsultaDTOPaciente toAtencionConsultaDTOPaciente() {
+
+        return new AtencionConsultaDTOPaciente(
+                getSintomas(),
+                getDiagnostico(),
+                getTratamiento(),
+                getNotasMedicas()
+        );
+    }
 }

@@ -11,4 +11,6 @@ public interface PqrsRepository extends JpaRepository<Pqrs, Long> {
 
     List<Pqrs> findAllByEstadoPqrs_Estado(String estado);
 
+    List<Pqrs> findAllByConsulta_Paciente_Id(Long idPaciente);
+
 }

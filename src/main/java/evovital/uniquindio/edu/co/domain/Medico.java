@@ -1,5 +1,6 @@
 package evovital.uniquindio.edu.co.domain;
 
+import evovital.uniquindio.edu.co.dto.medico.MedicoDTOPaciente;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -24,7 +25,6 @@ public class Medico extends Usuario implements Serializable {
     private String telefono;
 
     @Lob
-    @Column(nullable = false)
     private String urlFotoPersonal;
 
     @OneToMany(mappedBy = "medico")
@@ -41,7 +41,16 @@ public class Medico extends Usuario implements Serializable {
     @OneToMany(mappedBy = "medico")
     private List<HorarioAtencion> horarios;
 
-    @ManyToMany(mappedBy = "medicos")
+    @OneToMany(mappedBy = "medico")
     private List<DiaLibre> diasLibres;
 
+    public MedicoDTOPaciente toMedicoDTOPaciente() {
+
+        return new MedicoDTOPaciente(
+                getId(),
+                getNombre(),
+                getEspecialidad().getNombre()
+        );
+
+    }
 }

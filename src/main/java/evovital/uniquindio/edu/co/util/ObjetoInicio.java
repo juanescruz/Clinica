@@ -39,13 +39,11 @@ public class ObjetoInicio implements CommandLineRunner {
             EstadoConsulta.builder().estado("Pendiente").build(),
             EstadoConsulta.builder().estado("Atendida").build(),
             EstadoConsulta.builder().estado("En Proceso").build(),
-            EstadoConsulta.builder().estado("Cancelada").build(),
-            EstadoConsulta.builder().estado("Rechazada").build()
+            EstadoConsulta.builder().estado("Cancelada").build()
     );
 
     private final List<EstadoDiaLibre> estadoDiaLibre = List.of(
-            EstadoDiaLibre.builder().estado("Disponible").build(),
-            EstadoDiaLibre.builder().estado("Ocupado").build(),
+            EstadoDiaLibre.builder().estado("Culminado").build(),
             EstadoDiaLibre.builder().estado("Cancelado").build(),
             EstadoDiaLibre.builder().estado("Tomado").build()
     );

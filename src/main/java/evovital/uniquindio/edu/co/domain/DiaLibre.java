@@ -2,10 +2,10 @@ package evovital.uniquindio.edu.co.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity
 @Getter
@@ -13,6 +13,7 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@SuperBuilder
 public class DiaLibre implements Serializable {
 
     @Id
@@ -20,11 +21,11 @@ public class DiaLibre implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private LocalDate fecha;
 
-    @ManyToMany
-    private List<Medico> medicos;
+    @ManyToOne
+    private Medico medico;
 
     @JoinColumn(nullable = false)
     @ManyToOne

@@ -20,9 +20,9 @@ public interface PacienteService {
 
     PacienteDTO eliminarCuenta(Long idPaciente);
 
-    boolean enviarLinkRecuperacion(String emailPaciente);
+    void enviarLinkRecuperacion(String emailPaciente);
 
-    boolean cambiarPassword(Long idPaciente, String password);
+    void cambiarPassword(Long idPaciente, String password);
 
     void agendarConsulta(InfoConsultaDTO consultaDTO);
 
@@ -30,7 +30,7 @@ public interface PacienteService {
 
     List<PQRSDTOPaciente> listarPQRSPaciente(Long idPaciente);
 
-    void responderPQRS(Long idPQRS, MensajeDTOUsuario mensajeUsuario);
+    Long responderPQRS(MensajeDTOUsuario mensajeUsuario);
 
     List<ConsultaDTOPaciente> listarConsultasPaciente(Long idPaciente);
 
@@ -40,8 +40,8 @@ public interface PacienteService {
 
     DetalleConsultaDTOPaciente verDetalleConsulta(Long idConsulta);
 
-    boolean reagendarConsulta(Long idConsulta, LocalDateTime fechaYHora);
+    Long reagendarConsulta(Long idConsulta, LocalDateTime fechaYHora);
 
-    boolean calificarPQRS(Long idPQRS, int calificacion);
+    Long calificarPQRS(Long idPQRS, int calificacion);
 
 }

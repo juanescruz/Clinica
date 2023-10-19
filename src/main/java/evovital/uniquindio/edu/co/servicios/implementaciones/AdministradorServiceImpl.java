@@ -93,6 +93,7 @@ public class AdministradorServiceImpl implements AdministradorService {
             });
 
         medicoEncontrado = medicoDTOActualizarToMedico(medico);
+        medicoEncontrado.setPassword(new BCryptPasswordEncoder().encode(medicoEncontrado.getPassword()));
 
         Medico medicoActualizado = medicoRepository.save(medicoEncontrado);
 

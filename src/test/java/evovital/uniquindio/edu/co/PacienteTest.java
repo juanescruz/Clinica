@@ -19,6 +19,139 @@ public class PacienteTest {
     private PacienteService pacienteService;
 
     @Test
+    public void calificarPQRSTest() {
+
+        try {
+
+            System.out.println(pacienteService.calificarPQRS(1L, 5));
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @Test
+    public void reagendarConsultaTest() {
+
+        try {
+
+            System.out.println(pacienteService.reagendarConsulta(1L, LocalDateTime.now()));
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @Test
+    public void verDetalleConsultaTest() {
+
+        try {
+
+            System.out.println(pacienteService.verDetalleConsulta(1L));
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @Test
+    public void filtrarConsultasPorMedicoTest() {
+
+        try {
+
+            System.out.println(pacienteService.filtarConsultasPorMedico(2L, 1L));
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @Test
+    public void filtrarConsultasPorFechaTest() {
+
+        try {
+
+            System.out.println(pacienteService.filtrarConsultasPorFecha(2L, LocalDate.now()));
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @Test
+    public void listarConsultasPacienteTest() {
+
+        try {
+
+            System.out.println(pacienteService.listarConsultasPaciente(2L));
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @Test
+    public void responderPQRSTest() {
+
+        try {
+
+            pacienteService.responderPQRS(new MensajeDTOUsuario(
+                    "respuesta al primer mensaje puesto por el usuario",
+                    2L,
+                    1L
+            ));
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @Test
+    public void listarPQRSPacienteTest() {
+
+        try {
+
+            System.out.println(pacienteService.listarPQRSPaciente(2L));
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @Test
+    public void cambiarPasswordTest() {
+
+        try {
+
+            pacienteService.cambiarPassword(3L, "holamundo");
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @Test
+    public void enviarLinkDeRecuperacionTest() {
+
+        try {
+
+            pacienteService.enviarLinkRecuperacion("juescaos42@gmail.com");
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
     public void editarPerfilTest() {
         try {
             System.out.println(
@@ -34,8 +167,7 @@ public class PacienteTest {
                                 "EPS",
                                 "O-",
                                 "Cali",
-                                "12345678",
-                                "1100000101010100101110101001010100101010101010101111001010001010010100010100101"
+                                "12345678"
                         )
                     )
             );
@@ -51,15 +183,14 @@ public class PacienteTest {
                     new PacienteDTO(
                             "Paciente",
                             "123456789",
-                            "hola@gmail.com",
+                            "juescaos42@gmail.com",
                             "123456789",
                             LocalDate.now(),
                             "Alergias",
                             "EPS",
                             "O+",
                             "Cali",
-                            "123456789",
-                            "110000010101010010111010100101010010101010101010101111001010001010010100010100101"
+                            "123456789"
                     )
             );
         } catch (Exception e) {

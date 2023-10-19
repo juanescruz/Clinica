@@ -1,8 +1,6 @@
 package evovital.uniquindio.edu.co.controllers;
 
 import evovital.uniquindio.edu.co.dto.login.AuthLoginDto;
-import evovital.uniquindio.edu.co.repositories.UsuarioRepository;
-import evovital.uniquindio.edu.co.servicios.implementaciones.UsuarioServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -38,8 +38,7 @@ public class Paciente extends Usuario implements Serializable {
     private String telefono;
 
     @Lob
-    @Column(nullable = false)
-    private String fotoPersonal;
+    private String urlFotoPersonal;
 
     @OneToMany(mappedBy = "paciente")
     private List<Consulta> consultas;

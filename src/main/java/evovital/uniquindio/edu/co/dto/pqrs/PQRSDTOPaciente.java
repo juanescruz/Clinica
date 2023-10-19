@@ -1,12 +1,19 @@
 package evovital.uniquindio.edu.co.dto.pqrs;
 
-import java.time.LocalDateTime;
+import evovital.uniquindio.edu.co.domain.Pqrs;
+
+import java.time.LocalDate;
 
 public record PQRSDTOPaciente(
 
-        int codigo,
+        Long codigo,
         String estado,
-        LocalDateTime fechaYHora
+        LocalDate fecha
 
 ) {
+
+    public PQRSDTOPaciente(Pqrs pqrs) {
+        this(pqrs.getId(), pqrs.getEstadoPqrs().getEstado(), pqrs.getFechaCreacion());
+    }
+
 }

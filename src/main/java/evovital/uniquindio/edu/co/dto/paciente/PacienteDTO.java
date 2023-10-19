@@ -15,8 +15,7 @@ public record PacienteDTO(
         String eps,
         String tipoSangre,
         String ciudadResidencia,
-        String telefono,
-        String fotoPersonal
+        String telefono
 
 ) {
     public Paciente toEntity() {

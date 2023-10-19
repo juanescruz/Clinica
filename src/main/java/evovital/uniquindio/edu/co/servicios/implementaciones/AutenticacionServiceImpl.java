@@ -23,6 +23,7 @@ public class AutenticacionServiceImpl implements AutenticacionService {
     private final UsuarioRepository usuarioRepository;
     private final JWTUtils jwtUtils;
 
+    // TODO: test missing
     @Override
     public TokenDTO login(AuthLoginDto authLoginDto) throws Exception {
 

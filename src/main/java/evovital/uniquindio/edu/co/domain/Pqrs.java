@@ -1,5 +1,6 @@
 package evovital.uniquindio.edu.co.domain;
 
+import evovital.uniquindio.edu.co.dto.pqrs.PQRSDTOPaciente;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -36,4 +37,16 @@ public class Pqrs implements Serializable {
     @OneToMany(mappedBy = "pqrs")
     private List<Mensaje> mensajes;
 
+    @Column
+    private int calificacion;
+
+    public PQRSDTOPaciente toPQRSDTOPaciente() {
+
+        return new PQRSDTOPaciente(
+                getId(),
+                getEstadoPqrs().getEstado(),
+                getFechaCreacion()
+        );
+
+    }
 }
