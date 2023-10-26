@@ -40,4 +40,7 @@ public abstract class Usuario implements Serializable {
     @Column(nullable = false, unique = true)
     private String cedula;
 
+    @Column(nullable = false, length = 1)
+    private boolean estaActivo;
+
 }

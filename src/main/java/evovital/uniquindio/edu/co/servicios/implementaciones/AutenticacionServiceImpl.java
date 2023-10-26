@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -28,13 +27,10 @@ public class AutenticacionServiceImpl implements AutenticacionService {
     public TokenDTO login(AuthLoginDto authLoginDto) throws Exception {
 
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        Optional<Usuario> cuentaOptional = usuarioRepository.findByEmail(authLoginDto.email());
 
-        if(cuentaOptional.isEmpty()){
-            throw new Exception("No existe el correo ingresado");
-        }
-
-        Usuario usuario = cuentaOptional.get();
+        Usuario usuario = usuarioRepository.findByEmailAndEstaActivoTrue(authLoginDto.email()).orElseThrow(
+                () -> new Exception("No existe el correo ingresado")
+        );
 
         if( !passwordEncoder.matches(authLoginDto.password(), usuario.getPassword()) ){
             throw new Exception("La contraseña ingresada es incorrecta");

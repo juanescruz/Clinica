@@ -6,19 +6,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.lang.annotation.Annotation;
 import java.util.Map;
 
 @RestControllerAdvice
 public class LoginHandler {
 
-
     @ExceptionHandler(LoginValidationException.class)
     public ResponseEntity<Map<String, String>> loginValidationException(LoginValidationException e){
-
 
         switch (e.getMessage()){
 

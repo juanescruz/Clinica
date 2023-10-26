@@ -1,6 +1,7 @@
 package evovital.uniquindio.edu.co.servicios.implementaciones;
 
 import evovital.uniquindio.edu.co.domain.AtencionConsulta;
+import evovital.uniquindio.edu.co.domain.Consulta;
 import evovital.uniquindio.edu.co.domain.DiaLibre;
 import evovital.uniquindio.edu.co.dto.atencionConsulta.AtencionConsultaDTOMedico;
 import evovital.uniquindio.edu.co.dto.consulta.ConsultaDTOMedico;
@@ -9,8 +10,10 @@ import evovital.uniquindio.edu.co.repositories.*;
 import evovital.uniquindio.edu.co.servicios.especificaciones.MedicoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -22,6 +25,7 @@ public class MedicoServiceImpl implements MedicoService {
     private final DiaLibreRepository diaLibreRepository;
     private final MedicoRepository medicoRepository;
     private final EstadoDiaLibreRepository estadoDiaLibreRepository;
+    private final EstadoConsultaRepository estadoConsultaRepository;
 
     /**
      * Metodo que lista las consultas pendientes de un medico
@@ -30,7 +34,7 @@ public class MedicoServiceImpl implements MedicoService {
      */
     @Override
     public List<ConsultaDTOMedico> listarConsultasPendientes(Long idMedico) {
-        return consultaRepository.findAllByMedico_IdAAndAndEstadoConsulta_Estado(idMedico, "Pendiente").stream().map(ConsultaDTOMedico::new).toList();
+        return consultaRepository.findAllByMedico_IdAndEstadoConsulta_Estado(idMedico, "Pendiente").stream().map(ConsultaDTOMedico::new).toList();
     }
 
     /**
@@ -48,14 +52,22 @@ public class MedicoServiceImpl implements MedicoService {
      * @param idConsulta
      * @param atencionConsultaMedico
      */
+    @Transactional
     @Override
-    public void atenderConsulta(Long idConsulta, AtencionConsultaDTOMedico atencionConsultaMedico) {
+    public void atenderConsulta(Long idConsulta, AtencionConsultaDTOMedico atencionConsultaMedico) throws Exception {
 
-        AtencionConsulta atencionConsulta = atencionConsultaMedico.toAtencionConsulta();
-        atencionConsulta.setConsulta(consultaRepository.findById(idConsulta).orElseThrow(() -> new RuntimeException("No se encontro la consulta")));
+        AtencionConsulta atencionConsulta = atencionConsultaMedico.toEntity();
+        Consulta consulta = consultaRepository.findById(idConsulta).orElseThrow(() -> new RuntimeException("No se encontro la consulta"));
 
+        if (consulta.getMedico().getHorarios().stream().noneMatch(horarioAtencion -> horarioAtencion.getDia().equals(LocalDate.now().getDayOfWeek()) &&
+                horarioAtencion.getInicio().isBefore(LocalTime.now()) &&
+                horarioAtencion.getFin().isAfter(LocalTime.now())
+        )) throw new Exception("El medico no atiende en el horario seleccionado");
+
+        atencionConsulta.setConsulta( consulta );
+        consulta.setEstadoConsulta( estadoConsultaRepository.findByEstado("Atendida").orElseThrow(() -> new Exception("Estado no encontrado")));
         atencionConsultaRepository.save(atencionConsulta);
-
+        consultaRepository.save(consulta);
     }
 
     /**
@@ -76,18 +88,18 @@ public class MedicoServiceImpl implements MedicoService {
      * @return
      */
     @Override
-    public boolean agendarDiaLibre(Long idMedico, LocalDate diaLibre) {
+    public boolean agendarDiaLibre(Long idMedico, LocalDate diaLibre) throws Exception {
 
-        if (diaLibre.isAfter(LocalDate.now()) || diaLibre.isEqual(LocalDate.now())) return false;
-        if (medicoRepository.findById(idMedico).isEmpty()) return false;
-        if (!consultaRepository.findAllByFechaYHoraAtencion(diaLibre.atStartOfDay()).isEmpty()) return false;
+        medicoRepository.findByIdAndEstaActivoTrue(idMedico).orElseThrow(() -> new Exception("El medico no fue encontrado"));
+        if (diaLibre.isBefore(LocalDate.now()) || diaLibre.isEqual(LocalDate.now())) throw new Exception("Debe solicitar los dias libres al menos con un dia de anticipacion");
+        if (!consultaRepository.findAllByFechaYHoraAtencionAndEstadoConsulta_Estado(diaLibre.atStartOfDay(), "Pendiente").isEmpty()) throw new Exception("El medico ya tiene citas asignadas ese dia");
 
         DiaLibre diaLibreAux = DiaLibre.builder()
                 .fecha(diaLibre)
                 .estadoDiaLibre(
                     estadoDiaLibreRepository.findByEstado("Tomado").orElseThrow(() -> new RuntimeException("No se encontro el estado"))
                 ).medico(
-                    medicoRepository.findById(idMedico).orElseThrow(() -> new RuntimeException("No se encontro el medico"))
+                    medicoRepository.findByIdAndEstaActivoTrue(idMedico).orElseThrow(() -> new RuntimeException("No se encontro el medico"))
                 ).build();
 
         diaLibreRepository.save(diaLibreAux);

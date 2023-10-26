@@ -18,6 +18,21 @@ public record PacienteDTO(
         String telefono
 
 ) {
+
+    public PacienteDTO(Paciente paciente) {
+        this(
+                paciente.getNombre(),
+                paciente.getCedula(),
+                paciente.getEmail(),
+                paciente.getPassword(),
+                paciente.getFechaNacimiento(),
+                paciente.getAlergias(),
+                paciente.getEps(),
+                paciente.getTipoSangre(),
+                paciente.getCiudadResidencia(),
+                paciente.getTelefono());
+    }
+
     public Paciente toEntity() {
 
         return Paciente.builder()

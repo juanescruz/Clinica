@@ -15,10 +15,12 @@ public interface ConsultaRepository extends JpaRepository<Consulta, Long> {
 
     List<Consulta> findAllByPaciente_IdAndMedico_Id(Long idPaciente, Long idMedico);
 
-    List<Consulta> findAllByMedico_IdAAndAndEstadoConsulta_Estado(Long idMedico, String estado);
+    List<Consulta> findAllByMedico_IdAndEstadoConsulta_Estado(Long idMedico, String estado);
 
     List<Consulta> findAllByFechaYHoraAtencion(LocalDateTime fechaYHoraAtencion);
 
     List<Consulta> findAllByEstadoConsulta_EstadoAndMedico_Id(String estado, Long idMedico);
+
+    List<Consulta> findAllByFechaYHoraAtencionAndEstadoConsulta_Estado(LocalDateTime fechaYHoraDeAtencion, String estado);
 
 }

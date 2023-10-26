@@ -16,37 +16,46 @@ public class MedicoTest {
 
     @Test
     public void listarConsultasRealizadasMedicoTest() {
-        System.out.println(medicoService.listarConsultasRealizadasMedico(1L));
+        System.out.println(medicoService.listarConsultasRealizadasMedico(2L));
     }
 
     @Test
     public void agendarDiaLibreTest() {
-        medicoService.agendarDiaLibre(1L, LocalDate.of(2021, 10, 10));
+
+        try {
+            medicoService.agendarDiaLibre(2L, LocalDate.of(2023, 12, 31));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
     public void listarConsultasPacientesTest() {
-        System.out.println(medicoService.listarConsultasPacientes(1L, 2L));
+        System.out.println(medicoService.listarConsultasPacientes(2L, 4L));
     }
 
     @Test
     public void atenderConsultaTest() {
-        medicoService.atenderConsulta(1L, new AtencionConsultaDTOMedico(
-                "Sintomas",
-                "Diagnostico",
-                "Tratamiento",
-                "Notas medicas"
-        ));
+        try {
+            medicoService.atenderConsulta(4L, new AtencionConsultaDTOMedico(
+                    "Sintomas",
+                    "Diagnostico",
+                    "Tratamiento",
+                    "Notas medicas"
+            ));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
     public void listarConsultasPendientesTest() {
-        System.out.println(medicoService.listarConsultasPendientes(1L));
+        System.out.println(medicoService.listarConsultasPendientes(2L));
     }
 
     @Test
     public void verDetalleConsultaTest() {
-        System.out.println(medicoService.verDetalleConsulta(1L));
+        System.out.println(medicoService.verDetalleConsulta(4L));
     }
 
 }

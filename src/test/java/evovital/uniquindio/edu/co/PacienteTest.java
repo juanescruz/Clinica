@@ -36,7 +36,7 @@ public class PacienteTest {
 
         try {
 
-            System.out.println(pacienteService.reagendarConsulta(1L, LocalDateTime.now()));
+            System.out.println(pacienteService.reagendarConsulta(4L, LocalDateTime.now()));
 
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -49,7 +49,7 @@ public class PacienteTest {
 
         try {
 
-            System.out.println(pacienteService.verDetalleConsulta(1L));
+            System.out.println(pacienteService.verDetalleConsulta(4L));
 
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -62,7 +62,7 @@ public class PacienteTest {
 
         try {
 
-            System.out.println(pacienteService.filtarConsultasPorMedico(2L, 1L));
+            System.out.println(pacienteService.filtarConsultasPorMedico(3L, 2L));
 
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -75,7 +75,7 @@ public class PacienteTest {
 
         try {
 
-            System.out.println(pacienteService.filtrarConsultasPorFecha(2L, LocalDate.now()));
+            System.out.println(pacienteService.filtrarConsultasPorFecha(3L, LocalDate.parse("2023-10-25")));
 
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -88,7 +88,7 @@ public class PacienteTest {
 
         try {
 
-            System.out.println(pacienteService.listarConsultasPaciente(2L));
+            System.out.println(pacienteService.listarConsultasPaciente(3L));
 
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -103,8 +103,8 @@ public class PacienteTest {
 
             pacienteService.responderPQRS(new MensajeDTOUsuario(
                     "respuesta al primer mensaje puesto por el usuario",
-                    2L,
-                    1L
+                    4L,
+                    6L
             ));
 
         } catch (Exception e) {
@@ -118,7 +118,7 @@ public class PacienteTest {
 
         try {
 
-            System.out.println(pacienteService.listarPQRSPaciente(2L));
+            System.out.println(pacienteService.listarPQRSPaciente(4L));
 
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -131,7 +131,7 @@ public class PacienteTest {
 
         try {
 
-            pacienteService.cambiarPassword(3L, "holamundo");
+            pacienteService.cambiarPassword(4L, "holamundo");
 
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -156,12 +156,12 @@ public class PacienteTest {
         try {
             System.out.println(
                     pacienteService.editarPerfil(
-                        2L,
+                        4L,
                         new PacienteDTO(
                                 "Paciente",
-                                "12345678",
-                                "hola2@gmail.com",
-                                "123456789",
+                                "123456780",
+                                "juescaos424@gmail.com",
+                                null,
                                 LocalDate.now(),
                                 "Alergias",
                                 "EPS",
@@ -182,8 +182,8 @@ public class PacienteTest {
             pacienteService.registrarse(
                     new PacienteDTO(
                             "Paciente",
-                            "123456789",
-                            "juescaos42@gmail.com",
+                            "123",
+                            "hola@gmail.com",
                             "123456789",
                             LocalDate.now(),
                             "Alergias",
@@ -202,10 +202,10 @@ public class PacienteTest {
     public void agendarConsultaTest() {
         try {
             pacienteService.agendarConsulta(new InfoConsultaDTO(
+                    4L,
                     2L,
-                    1L,
                     LocalDateTime.now(),
-                    "Hola, soy un mensaje de prueba y necesito una consulta"
+                    "Hola, soy un mensaje de prueba y necesito una primera consulta"
             ));
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -216,11 +216,11 @@ public class PacienteTest {
     public void crearPqrsTest() {
         try {
             pacienteService.crearPQRS(new PQRSDTOPacienteReq(
-                    1L,
+                    4L,
                     new MensajeDTOUsuario(
-                            "Hola, soy un mensaje de prueba",
-                            2L,
-                            1L
+                            "Hola, soy otro mensaje de prueba",
+                            4L,
+                            null
                     )
             ));
         } catch (Exception e) {

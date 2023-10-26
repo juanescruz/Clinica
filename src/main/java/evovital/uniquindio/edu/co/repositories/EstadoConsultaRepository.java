@@ -3,6 +3,8 @@ package evovital.uniquindio.edu.co.repositories;
 import evovital.uniquindio.edu.co.domain.EstadoConsulta;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Optional;
+
 public interface EstadoConsultaRepository extends JpaRepository<EstadoConsulta, Long> {
-    EstadoConsulta findByEstado(String estado);
+    Optional<EstadoConsulta> findByEstado(String estado);
 }

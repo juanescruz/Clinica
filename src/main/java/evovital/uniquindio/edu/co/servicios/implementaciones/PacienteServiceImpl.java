@@ -1,6 +1,9 @@
 package evovital.uniquindio.edu.co.servicios.implementaciones;
 
-import evovital.uniquindio.edu.co.domain.*;
+import evovital.uniquindio.edu.co.domain.Consulta;
+import evovital.uniquindio.edu.co.domain.Mensaje;
+import evovital.uniquindio.edu.co.domain.Paciente;
+import evovital.uniquindio.edu.co.domain.Pqrs;
 import evovital.uniquindio.edu.co.dto.auxiliar.EmailDTO;
 import evovital.uniquindio.edu.co.dto.consulta.ConsultaDTOPaciente;
 import evovital.uniquindio.edu.co.dto.consulta.DetalleConsultaDTOPaciente;
@@ -11,7 +14,6 @@ import evovital.uniquindio.edu.co.dto.pqrs.PQRSDTOPaciente;
 import evovital.uniquindio.edu.co.dto.pqrs.PQRSDTOPacienteReq;
 import evovital.uniquindio.edu.co.repositories.*;
 import evovital.uniquindio.edu.co.servicios.especificaciones.EmailService;
-import evovital.uniquindio.edu.co.servicios.especificaciones.ImagenesService;
 import evovital.uniquindio.edu.co.servicios.especificaciones.PacienteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -34,7 +36,6 @@ public class PacienteServiceImpl implements PacienteService {
     private final EstadoConsultaRepository estadoConsultaRepository;
     private final MedicoRepository medicoRepository;
 
-    private final ImagenesService imagenesService;
     private final EmailService emailService;
 
     /**
@@ -47,7 +48,7 @@ public class PacienteServiceImpl implements PacienteService {
 
         Paciente paciente = pacienteDTO.toEntity();
         paciente.setPassword(new BCryptPasswordEncoder().encode(paciente.getPassword()));
-        // TODO: paciente.setFotoPersonal(imagenesService.subirImagen());
+        paciente.setEstaActivo( true );
 
         paciente = pacienteRepository.save(paciente);
         return paciente.getId();
@@ -66,28 +67,38 @@ public class PacienteServiceImpl implements PacienteService {
         Paciente pacienteEncontrado = pacienteRepository.findById(idPaciente).orElseThrow( () -> new Exception("No se encontró el paciente"));
 
         if (!pacienteEncontrado.getCedula().equals(pacienteDTO.cedula()))
-            pacienteRepository.findByCedula(pacienteDTO.cedula()).ifPresent(m -> {
-                throw new RuntimeException("Ya existe un paciente con esa cedula");
+            usuarioRepository.findByCedula(pacienteDTO.cedula()).ifPresent(m -> {
+                throw new RuntimeException("Ya existe un usuario con esa cedula");
             });
 
         if (!pacienteEncontrado.getEmail().equals(pacienteDTO.email()))
-            pacienteRepository.findByEmail(pacienteDTO.email()).ifPresent(m -> {
+            usuarioRepository.findByEmail(pacienteDTO.email()).ifPresent(m -> {
                 throw new RuntimeException("Ya existe un paciente con ese email");
             });
 
         Paciente paciente = pacienteDTO.toEntity();
-        paciente.setPassword(new BCryptPasswordEncoder().encode(paciente.getPassword()));
-        // TODO: paciente.setFotoPersonal(imagenesService.subirImagen());
         paciente.setId(idPaciente);
+        paciente.setEstaActivo( true );
+        paciente.setPassword(pacienteEncontrado.getPassword());
 
         return pacienteRepository.save(paciente).getId();
 
     }
 
-    // TODO: implementar luego de cambiar la propiedad "estaActivo" de Medico a Usuario
+    /**
+     * elimina una cuenta de paciente
+     * @param idPaciente
+     * @return
+     */
     @Override
     public PacienteDTO eliminarCuenta(Long idPaciente) {
-        return null;
+
+        Paciente paciente = pacienteRepository.findById(idPaciente).orElseThrow(
+                () -> new RuntimeException("paciente no encontrado")
+        );
+
+        paciente.setEstaActivo(false);
+        return new PacienteDTO( pacienteRepository.save(paciente) );
     }
 
     /**
@@ -120,7 +131,6 @@ public class PacienteServiceImpl implements PacienteService {
     public void cambiarPassword(Long idPaciente, String newPassword) {
 
         Paciente pacienteEncontrado = pacienteRepository.findById(idPaciente).orElseThrow(() -> new RuntimeException("No se encontró el paciente"));
-
         pacienteEncontrado.setPassword(new BCryptPasswordEncoder().encode(newPassword));
         pacienteRepository.save(pacienteEncontrado);
 
@@ -133,9 +143,12 @@ public class PacienteServiceImpl implements PacienteService {
     @Override
     public void agendarConsulta(InfoConsultaDTO consultaDTO) {
 
+        if (LocalDateTime.now().plusDays(5).isBefore(consultaDTO.fechaYHoraDeAtencion()))
+            throw new RuntimeException("la fecha y hora de atencion son invalidas");
+
         Consulta consulta = consultaDTO.toEntity();
         consulta.setPaciente(pacienteRepository.findById(consultaDTO.idPaciente()).orElseThrow(() -> new RuntimeException("No se encontró el paciente")));
-        consulta.setEstadoConsulta(estadoConsultaRepository.findByEstado("Pendiente"));
+        consulta.setEstadoConsulta(estadoConsultaRepository.findByEstado("Pendiente").orElseThrow(() -> new RuntimeException("No existe el estado")));
         consulta.setMedico(medicoRepository.findById(consultaDTO.idMedico()).orElseThrow(() -> new RuntimeException("No se encontró el medico")));
 
         consultaRepository.save(consulta);
@@ -148,13 +161,13 @@ public class PacienteServiceImpl implements PacienteService {
     public void crearPQRS(PQRSDTOPacienteReq pqrsPaciente) {
 
         Pqrs pqrs = pqrsPaciente.toEntity();
-        pqrs.setEstadoPqrs(estadoPqrsRepository.findByEstado("En proceso"));
+        pqrs.setEstadoPqrs(estadoPqrsRepository.findByEstado("En proceso").orElseThrow(() -> new RuntimeException("No existe el estado del pqrs")));
         pqrs.setConsulta(consultaRepository.findById(pqrsPaciente.idConsulta()).orElseThrow(() -> new RuntimeException("No se encontró la consulta")));
         pqrs = pqrsRepository.save(pqrs);
 
         Mensaje mensaje = pqrsPaciente.mensaje().toEntity();
         mensaje.setPqrs(pqrs);
-        mensaje.setUsuario(usuarioRepository.getReferenceById(pqrsPaciente.mensaje().idUsuario()));
+        mensaje.setUsuario(usuarioRepository.findById(pqrsPaciente.mensaje().idUsuario()).orElseThrow(() -> new RuntimeException("No se encontró el usuario")));
         mensajeRepository.save(mensaje);
 
     }
@@ -170,7 +183,6 @@ public class PacienteServiceImpl implements PacienteService {
         List<Pqrs> pqrsPaciente = pqrsRepository.findAllByConsulta_Paciente_Id(idPaciente);
 
         return pqrsPaciente.stream().map(PQRSDTOPaciente::new).toList();
-
     }
 
     /**
@@ -227,7 +239,7 @@ public class PacienteServiceImpl implements PacienteService {
      */
     @Override
     public DetalleConsultaDTOPaciente verDetalleConsulta(Long idConsulta) {
-        return consultaRepository.findById(idConsulta).orElseThrow(() -> new RuntimeException("No se encontró la consulta")).toDetalleConsultaDTOPaciente();
+        return new DetalleConsultaDTOPaciente( consultaRepository.findById(idConsulta).orElseThrow(() -> new RuntimeException("No se encontró la consulta")) );
     }
 
     /**

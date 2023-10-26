@@ -10,7 +10,7 @@ public record AtencionConsultaDTOMedico(
         String notasMedicas
 
 ) {
-    public AtencionConsulta toAtencionConsulta() {
+    public AtencionConsulta toEntity() {
 
         return AtencionConsulta.builder()
                 .sintomas(sintomas)

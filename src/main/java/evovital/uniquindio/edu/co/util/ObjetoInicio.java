@@ -1,15 +1,10 @@
 package evovital.uniquindio.edu.co.util;
 
-import evovital.uniquindio.edu.co.domain.Especialidad;
-import evovital.uniquindio.edu.co.domain.EstadoConsulta;
-import evovital.uniquindio.edu.co.domain.EstadoDiaLibre;
-import evovital.uniquindio.edu.co.domain.EstadoPqrs;
-import evovital.uniquindio.edu.co.repositories.EspecialidadRepository;
-import evovital.uniquindio.edu.co.repositories.EstadoConsultaRepository;
-import evovital.uniquindio.edu.co.repositories.EstadoDiaLibreRepository;
-import evovital.uniquindio.edu.co.repositories.EstadoPqrsRepository;
+import evovital.uniquindio.edu.co.domain.*;
+import evovital.uniquindio.edu.co.repositories.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -22,6 +17,7 @@ public class ObjetoInicio implements CommandLineRunner {
     private final EstadoPqrsRepository estadoPqrsRepository;
     private final EstadoDiaLibreRepository estadoDiaLibreRepository;
     private final EstadoConsultaRepository estadoConsultaRepository;
+    private final AdministradorRepository administradorRepository;
 
     private final List<Especialidad> especialidades = List.of(
             Especialidad.builder().nombre("Cardiologia").build(),
@@ -48,6 +44,16 @@ public class ObjetoInicio implements CommandLineRunner {
             EstadoDiaLibre.builder().estado("Tomado").build()
     );
 
+    private final List<Administrador> administradores = List.of(
+            Administrador.builder()
+                    .nombre("Camilo")
+                    .email("holamundo@gmail.com")
+                    .cedula("124923")
+                    .estaActivo( true )
+                    .password( new BCryptPasswordEncoder().encode("holamundo") )
+                    .build()
+    );
+
     /**
      * Metodo que se ejecuta al iniciar la aplicacion, guarda los estados que son valores constantes en la base de datos
      * @param args incoming main method arguments
@@ -72,6 +78,11 @@ public class ObjetoInicio implements CommandLineRunner {
         if (estadoDiaLibreRepository.findAll().isEmpty()){
             estadoDiaLibreRepository.saveAll(
                     estadoDiaLibre
+            );
+        }
+        if (administradorRepository.findAll().isEmpty()){
+            administradorRepository.saveAll(
+                    administradores
             );
         }
     }
