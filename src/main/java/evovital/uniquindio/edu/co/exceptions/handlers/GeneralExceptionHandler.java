@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestControllerAdvice
-public class LoginHandler {
+public class GeneralExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<MensajeDTO<String>> generalException(Exception e){
@@ -44,11 +44,8 @@ public class LoginHandler {
                 return ResponseEntity.status(HttpStatusCode.valueOf(HttpStatus.NOT_FOUND.value()))
                         .body(Map.of("Error", e.getMessage()));
 
-
-
         }
 
         return ResponseEntity.status(HttpStatusCode.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value())).body(Map.of("Error", e.getMessage()));
-
     }
 }

@@ -15,12 +15,6 @@ public class PacienteController {
 
     private final PacienteService pacienteService;
 
-    @PostMapping("/registrarse")
-    public ResponseEntity<MensajeDTO<Long>> registrarse(@Valid @RequestBody PacienteDTO pacienteDTO) {
-        Long id = pacienteService.registrarse(pacienteDTO);
-        return ResponseEntity.ok().body( new MensajeDTO<>(false, id) );
-    }
-
     @PutMapping("/editarPerfil/{idPaciente}")
     public ResponseEntity<MensajeDTO<Long>> editarPerfil(@PathVariable Long idPaciente, @Valid @RequestBody PacienteDTO pacienteDTO) throws Exception {
         Long id = pacienteService.editarPerfil(idPaciente, pacienteDTO);
@@ -31,4 +25,5 @@ public class PacienteController {
     public PacienteDTO eliminarCuenta(@PathVariable Long idPaciente) {
         return pacienteService.eliminarCuenta(idPaciente);
     }
+
 }
