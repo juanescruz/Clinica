@@ -31,7 +31,7 @@ public class MedicoTest {
 
     @Test
     public void listarConsultasPacientesTest() {
-        System.out.println(medicoService.listarConsultasPacientes(2L, 4L));
+        System.out.println(medicoService.listarConsultasPaciente(2L, 4L));
     }
 
     @Test

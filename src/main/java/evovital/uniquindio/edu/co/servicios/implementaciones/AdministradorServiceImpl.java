@@ -15,6 +15,7 @@ import evovital.uniquindio.edu.co.dto.pqrs.InfoPQRSDTO;
 import evovital.uniquindio.edu.co.dto.pqrs.PQRSDTOAdmin;
 import evovital.uniquindio.edu.co.repositories.*;
 import evovital.uniquindio.edu.co.servicios.especificaciones.AdministradorService;
+import evovital.uniquindio.edu.co.servicios.especificaciones.ImagenesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,8 @@ public class AdministradorServiceImpl implements AdministradorService {
     private final HorarioAtencionRepository horarioAtencionRepository;
     private final ConsultaRepository consultaRepository;
     private final PacienteRepository pacienteRepository;
+
+    private final ImagenesService imagenesService;
 
     /**
      * Crea un medico en la base de datos con la informacion necesaria y devuelve el id del medico que se acabo de crear

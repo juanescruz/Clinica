@@ -12,6 +12,7 @@ public record PacienteDTO(
         String password,
         LocalDate fechaNacimiento,
         String alergias,
+        String urlFotoPersonal,
         String eps,
         String tipoSangre,
         String ciudadResidencia,
@@ -27,6 +28,7 @@ public record PacienteDTO(
                 paciente.getPassword(),
                 paciente.getFechaNacimiento(),
                 paciente.getAlergias(),
+                paciente.getUrlFotoPersonal(),
                 paciente.getEps(),
                 paciente.getTipoSangre(),
                 paciente.getCiudadResidencia(),
@@ -41,6 +43,7 @@ public record PacienteDTO(
                 .ciudadResidencia(ciudadResidencia)
                 .fechaNacimiento(fechaNacimiento)
                 .nombre(nombre)
+                .urlFotoPersonal(urlFotoPersonal)
                 .telefono(telefono)
                 .tipoSangre(tipoSangre)
                 .cedula(cedula)

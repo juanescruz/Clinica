@@ -77,7 +77,7 @@ public class MedicoServiceImpl implements MedicoService {
      * @return
      */
     @Override
-    public List<ConsultaDTOMedico> listarConsultasPacientes(Long idMedico, Long idPaciente) {
+    public List<ConsultaDTOMedico> listarConsultasPaciente(Long idMedico, Long idPaciente) {
         return consultaRepository.findAllByPaciente_IdAndMedico_Id(idPaciente, idMedico).stream().map(ConsultaDTOMedico::new).toList();
     }
 

@@ -13,7 +13,6 @@ import java.io.Serializable;
 @ToString
 @EqualsAndHashCode(callSuper = true)
 @SuperBuilder
-// @PrimaryKeyJoinColumn(name = "administrador_id")
 public class Administrador extends Usuario implements Serializable {
 
 }

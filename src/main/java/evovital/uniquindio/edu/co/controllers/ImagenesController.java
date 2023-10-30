@@ -3,6 +3,7 @@ package evovital.uniquindio.edu.co.controllers;
 import evovital.uniquindio.edu.co.dto.auxiliar.MensajeDTO;
 import evovital.uniquindio.edu.co.dto.imagen.ImagenDTO;
 import evovital.uniquindio.edu.co.servicios.especificaciones.ImagenesService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/imagenes")
 @RequiredArgsConstructor
+@SecurityRequirement(name = "bearerAuth")
 public class ImagenesController {
     private final ImagenesService imagenesService;
 

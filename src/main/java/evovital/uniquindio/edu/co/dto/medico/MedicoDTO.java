@@ -19,6 +19,8 @@ public record MedicoDTO(
 
         @Length(max = 31) String password,
 
+        @NotNull @Length(max = 255) String urlFotoPersonal,
+
         @NotNull @Length(max = 31) @Pattern(regexp = "^[a-zA-Z]+$") String ciudadResidencia,
 
         @NotNull @Length(max = 31) @Pattern(regexp = "\\d+") String telefono,
@@ -37,6 +39,7 @@ public record MedicoDTO(
                 medico.getNombre(),
                 medico.getEmail(),
                 medico.getPassword(),
+                medico.getUrlFotoPersonal(),
                 medico.getCiudadResidencia(),
                 medico.getTelefono(),
                 medico.getEspecialidad().getId(),
@@ -53,6 +56,7 @@ public record MedicoDTO(
                 .nombre(nombre)
                 .email(email)
                 .password(password)
+                .urlFotoPersonal(urlFotoPersonal)
                 .ciudadResidencia(ciudadResidencia)
                 .telefono(telefono)
                 .build();
