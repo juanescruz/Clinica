@@ -15,6 +15,7 @@ import evovital.uniquindio.edu.co.dto.pqrs.PQRSDTOPacienteReq;
 import evovital.uniquindio.edu.co.repositories.*;
 import evovital.uniquindio.edu.co.servicios.especificaciones.EmailService;
 import evovital.uniquindio.edu.co.servicios.especificaciones.PacienteService;
+import evovital.uniquindio.edu.co.util.EnvironmentVariables;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -112,7 +113,8 @@ public class PacienteServiceImpl implements PacienteService {
             emailService.enviarEmail(new EmailDTO(
                     emailPaciente,
                     "Recuperación de contraseña",
-                    "Hola, para recuperar tu contraseña ingresa al siguiente link: http://localhost:8080/recuperar-contrasena/%d".formatted(
+                    "Hola, para recuperar tu contraseña ingresa al siguiente link: %s/cambiar-contrasenia/%d".formatted(
+                            EnvironmentVariables.frontDomainName,
                             pacienteRepository.findByEmail(emailPaciente).orElseThrow(() -> new RuntimeException("No se encontró el paciente")).getId()
                     )
             ));

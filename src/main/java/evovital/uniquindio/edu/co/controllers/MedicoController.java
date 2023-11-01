@@ -43,8 +43,8 @@ public class MedicoController {
         return ResponseEntity.ok().body( new MensajeDTO<>(false, medicoService.listarConsultasPaciente(idMedico, idPaciente)) );
     }
 
-    @PostMapping("/consulta/agendar-dia-libre/{idMedico}")
-    public ResponseEntity<MensajeDTO<Boolean>> agendarDiaLibre(@PathVariable Long idMedico, @Valid @RequestBody LocalDate fecha) throws Exception {
+    @PostMapping("/consulta/agendar-dia-libre/{idMedico}/{fecha}")
+    public ResponseEntity<MensajeDTO<Boolean>> agendarDiaLibre(@PathVariable Long idMedico, @PathVariable LocalDate fecha) throws Exception {
         return ResponseEntity.ok().body( new MensajeDTO<>(false, medicoService.agendarDiaLibre(idMedico, fecha)) );
     }
 

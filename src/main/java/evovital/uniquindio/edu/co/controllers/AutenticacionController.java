@@ -31,15 +31,14 @@ public class AutenticacionController {
         return ResponseEntity.ok().body( new MensajeDTO<>(false, "Paciente registrado correctamente") );
     }
 
-    // TODO: meter el campo email en un DTO y hacer lo mismo con todos los demás servicios
-    @PostMapping("/recuperar")
-    public ResponseEntity<MensajeDTO<String>> recuperarContraseña(@Valid @RequestBody String email) {
+    @PostMapping("/recuperar/{email}")
+    public ResponseEntity<MensajeDTO<String>> recuperarContraseña(@PathVariable String email) {
         pacienteService.enviarLinkRecuperacion(email);
         return ResponseEntity.ok().body( new MensajeDTO<>(false, "El link de recuperacion ha sido enviado a su correo"));
     }
 
-    @PostMapping("/cambiar-contrasenia/{idPaciente}")
-    public ResponseEntity<MensajeDTO<String>> cambiarContrasenia(@PathVariable Long idPaciente, @Valid @RequestBody String nuevaContrasenia) throws Exception {
+    @PostMapping("/cambiar-contrasenia/{idPaciente}/{nuevaContrasenia}")
+    public ResponseEntity<MensajeDTO<String>> cambiarContrasenia(@PathVariable Long idPaciente, @PathVariable String nuevaContrasenia) throws Exception {
         pacienteService.cambiarPassword(idPaciente, nuevaContrasenia);
         return ResponseEntity.ok().body( new MensajeDTO<>(false, "contrasenia cambiada con exito") );
     }

@@ -80,13 +80,13 @@ public class PacienteController {
         return ResponseEntity.ok().body( new MensajeDTO<>(false, pacienteService.verDetalleConsulta(idConsulta)) );
     }
 
-    @PostMapping("/consulta/agendar/{idConsulta}")
-    public ResponseEntity<MensajeDTO<Long>> reagendarConsulta(@PathVariable Long idConsulta, @Valid @RequestBody LocalDateTime fechaYHora) {
+    @PostMapping("/consulta/agendar/{idConsulta}/{fechaYHora}")
+    public ResponseEntity<MensajeDTO<Long>> reagendarConsulta(@PathVariable Long idConsulta, @PathVariable LocalDateTime fechaYHora) {
         return ResponseEntity.ok().body( new MensajeDTO<>(false, pacienteService.reagendarConsulta(idConsulta, fechaYHora)) );
     }
 
-    @PostMapping("/pqrs/calificar/{idPqrs}")
-    public ResponseEntity<MensajeDTO<Long>> calificarPqrs(@PathVariable Long idPqrs, @Valid @RequestBody int calificacion) {
+    @PostMapping("/pqrs/calificar/{idPqrs}/{calificacion}")
+    public ResponseEntity<MensajeDTO<Long>> calificarPqrs(@PathVariable Long idPqrs, @PathVariable int calificacion) {
         return ResponseEntity.ok().body( new MensajeDTO<>(false, pacienteService.calificarPQRS(idPqrs, calificacion)) );
     }
 
