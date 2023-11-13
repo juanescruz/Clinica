@@ -19,6 +19,70 @@ public class ObjetoInicio implements CommandLineRunner {
     private final EstadoConsultaRepository estadoConsultaRepository;
     private final AdministradorRepository administradorRepository;
 
+    //TODO Parra
+    public static final List<String> ciudades = List.of(
+            "Armenia",
+            "Barranquilla",
+            "Bogotá",
+            "Bucaramanga",
+            "Cali",
+            "Cartagena",
+            "Cúcuta",
+            "Ibagué",
+            "Manizales",
+            "Medellín",
+            "Montería",
+            "Neiva",
+            "Pasto",
+            "Pereira",
+            "Popayán",
+            "Santa Marta",
+            "Sincelejo",
+            "Tunja",
+            "Valledupar",
+            "Villavicencio",
+            "Yopal"
+    );
+
+
+    public static final List<String> tiposSangre = List.of(
+            "A+",
+            "A-",
+            "B+",
+            "B-",
+            "AB+",
+            "AB-",
+            "O+",
+            "O-"
+    );
+
+    public static final List<String> epss = List.of(
+            "Sura",
+            "Coomeva",
+            "Sanitas",
+            "Compensar",
+            "Salud Total",
+            "Nueva EPS",
+            "Famisanar",
+            "Cafesalud",
+            "Aliansalud",
+            "Medimas",
+            "Saludvida",
+            "Saludcoop",
+            "Cruz Blanca",
+            "Colmedica",
+            "Ambuq",
+            "Comfenalco",
+            "Comparta",
+            "Asmet Salud",
+            "Cajacopi",
+            "Capresoca",
+            "Caprecom",
+            "Cajacopi",
+            "Cajacopi",
+            "Cajacopi"
+    );
+
     private final List<Especialidad> especialidades = List.of(
             Especialidad.builder().nombre("Cardiologia").build(),
             Especialidad.builder().nombre("Psicologia").build(),
@@ -49,38 +113,39 @@ public class ObjetoInicio implements CommandLineRunner {
                     .nombre("Camilo")
                     .email("holamundo@gmail.com")
                     .cedula("124923")
-                    .estaActivo( true )
-                    .password( new BCryptPasswordEncoder().encode("holamundo") )
+                    .estaActivo(true)
+                    .password(new BCryptPasswordEncoder().encode("holamundo"))
                     .build()
     );
 
     /**
      * Metodo que se ejecuta al iniciar la aplicacion, guarda los estados que son valores constantes en la base de datos
+     *
      * @param args incoming main method arguments
      */
     @Override
     public void run(String... args) {
-        if(especialidadRepository.findAll().isEmpty()){
+        if (especialidadRepository.findAll().isEmpty()) {
             especialidadRepository.saveAll(
                     especialidades
             );
         }
-        if (estadoPqrsRepository.findAll().isEmpty()){
+        if (estadoPqrsRepository.findAll().isEmpty()) {
             estadoPqrsRepository.saveAll(
                     estadosPqrs
             );
         }
-        if (estadoConsultaRepository.findAll().isEmpty()){
+        if (estadoConsultaRepository.findAll().isEmpty()) {
             estadoConsultaRepository.saveAll(
                     estadosConsulta
             );
         }
-        if (estadoDiaLibreRepository.findAll().isEmpty()){
+        if (estadoDiaLibreRepository.findAll().isEmpty()) {
             estadoDiaLibreRepository.saveAll(
                     estadoDiaLibre
             );
         }
-        if (administradorRepository.findAll().isEmpty()){
+        if (administradorRepository.findAll().isEmpty()) {
             administradorRepository.saveAll(
                     administradores
             );
