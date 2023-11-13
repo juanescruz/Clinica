@@ -8,5 +8,4 @@ public record MensajeDTO<T>(
     public MensajeDTO(T respuesta) {
         this(false, respuesta);
     }
-
 }
