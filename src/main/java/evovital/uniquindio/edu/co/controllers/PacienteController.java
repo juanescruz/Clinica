@@ -6,6 +6,7 @@ import evovital.uniquindio.edu.co.dto.consulta.DetalleConsultaDTOPaciente;
 import evovital.uniquindio.edu.co.dto.consulta.InfoConsultaDTO;
 import evovital.uniquindio.edu.co.dto.mensaje.MensajeDTOUsuario;
 import evovital.uniquindio.edu.co.dto.paciente.PacienteDTO;
+import evovital.uniquindio.edu.co.dto.paciente.PacienteDTOPaciente;
 import evovital.uniquindio.edu.co.dto.pqrs.PQRSDTOPaciente;
 import evovital.uniquindio.edu.co.dto.pqrs.PQRSDTOPacienteReq;
 import evovital.uniquindio.edu.co.servicios.especificaciones.PacienteService;
@@ -26,6 +27,11 @@ import java.util.List;
 public class PacienteController {
 
     private final PacienteService pacienteService;
+
+    @GetMapping("/verPerfil/{idPaciente}")
+    public ResponseEntity<MensajeDTO<PacienteDTOPaciente>> verPerfil(@PathVariable Long idPaciente) {
+        return ResponseEntity.ok().body( new MensajeDTO<>(false, pacienteService.verPerfil(idPaciente)) );
+    }
 
     @PutMapping("/editarPerfil/{idPaciente}")
     public ResponseEntity<MensajeDTO<Long>> editarPerfil(@PathVariable Long idPaciente, @Valid @RequestBody PacienteDTO pacienteDTO) throws Exception {

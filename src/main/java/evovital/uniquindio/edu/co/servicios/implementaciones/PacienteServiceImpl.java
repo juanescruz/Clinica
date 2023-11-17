@@ -10,6 +10,7 @@ import evovital.uniquindio.edu.co.dto.consulta.DetalleConsultaDTOPaciente;
 import evovital.uniquindio.edu.co.dto.consulta.InfoConsultaDTO;
 import evovital.uniquindio.edu.co.dto.mensaje.MensajeDTOUsuario;
 import evovital.uniquindio.edu.co.dto.paciente.PacienteDTO;
+import evovital.uniquindio.edu.co.dto.paciente.PacienteDTOPaciente;
 import evovital.uniquindio.edu.co.dto.pqrs.PQRSDTOPaciente;
 import evovital.uniquindio.edu.co.dto.pqrs.PQRSDTOPacienteReq;
 import evovital.uniquindio.edu.co.repositories.*;
@@ -272,5 +273,16 @@ public class PacienteServiceImpl implements PacienteService {
         pqrsEncontrada.setCalificacion(calificacion);
 
         return pqrsRepository.save(pqrsEncontrada).getId();
+    }
+
+    /**
+     * trae el perfil de un paciente en especifico
+     * @param idPaciente
+     * @return
+     */
+    @Override
+    public PacienteDTOPaciente verPerfil(Long idPaciente) {
+        Paciente pacienteEncontrado = pacienteRepository.findById(idPaciente).orElseThrow(() -> new RuntimeException("No se encontró el paciente"));
+        return new PacienteDTOPaciente(pacienteEncontrado);
     }
 }

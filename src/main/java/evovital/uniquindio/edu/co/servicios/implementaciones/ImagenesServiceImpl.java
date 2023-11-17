@@ -19,7 +19,8 @@ public class ImagenesServiceImpl implements ImagenesService {
     public ImagenesServiceImpl() {
         Map<String, String> config = Map.of(
                 "cloud_name", "duhcmfydk",
-                "api_key", "551487173235559"
+                "api_key", "551487173235559",
+                "api_secret", "g-5onWpUr-ZQcpPI8kThG2xp-1A"
         );
 
         cloudinary = new Cloudinary(config);

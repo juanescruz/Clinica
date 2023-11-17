@@ -29,21 +29,21 @@ public class FiltroToken implements Filter {
         String token = getToken(req);
         boolean error = true;
         try {
-            if (requestURI.startsWith("/api/pacientes") || requestURI.startsWith("/api/medicos")
+            if (requestURI.startsWith("/api/paciente") || requestURI.startsWith("/api/medico")
 
-                    || requestURI.startsWith("/api/admins")) {
+                    || requestURI.startsWith("/api/administrador")) {
                 if (token != null) {
                     Jws<Claims> jws = jwtUtils.parseJwt(token);
                     if (
-                            (requestURI.startsWith("/api/pacientes") &&
+                            (requestURI.startsWith("/api/paciente") &&
 
                                     !jws.getBody().get("rol").equals("paciente")) ||
 
-                                    (requestURI.startsWith("/api/medicos") &&
+                                    (requestURI.startsWith("/api/medico") &&
 
                                             !jws.getBody().get("rol").equals("medico")) ||
 
-                                    (requestURI.startsWith("/api/admins") &&
+                                    (requestURI.startsWith("/api/administrador") &&
 
                                             !jws.getBody().get("rol").equals("admin"))) {
 

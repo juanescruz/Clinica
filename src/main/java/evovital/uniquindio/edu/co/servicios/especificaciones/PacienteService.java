@@ -5,6 +5,7 @@ import evovital.uniquindio.edu.co.dto.consulta.DetalleConsultaDTOPaciente;
 import evovital.uniquindio.edu.co.dto.consulta.InfoConsultaDTO;
 import evovital.uniquindio.edu.co.dto.mensaje.MensajeDTOUsuario;
 import evovital.uniquindio.edu.co.dto.paciente.PacienteDTO;
+import evovital.uniquindio.edu.co.dto.paciente.PacienteDTOPaciente;
 import evovital.uniquindio.edu.co.dto.pqrs.PQRSDTOPaciente;
 import evovital.uniquindio.edu.co.dto.pqrs.PQRSDTOPacienteReq;
 
@@ -44,4 +45,5 @@ public interface PacienteService {
 
     Long calificarPQRS(Long idPQRS, int calificacion);
 
+    PacienteDTOPaciente verPerfil(Long idPaciente);
 }
