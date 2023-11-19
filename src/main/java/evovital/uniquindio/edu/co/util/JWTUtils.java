@@ -26,7 +26,7 @@ public class JWTUtils {
                 .addClaims(claims)
                 .setSubject(email)
                 .setIssuedAt(Date.from(now))
-                .setExpiration(Date.from(now.plus(5L, ChronoUnit.MINUTES)))
+                .setExpiration(Date.from(now.plus(1L, ChronoUnit.DAYS)))
                 .signWith( getKey() )
                 .compact();
 
