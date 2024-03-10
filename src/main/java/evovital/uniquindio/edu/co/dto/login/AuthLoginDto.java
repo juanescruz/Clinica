@@ -1,12 +1,9 @@
 package evovital.uniquindio.edu.co.dto.login;
 
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 
 public record AuthLoginDto(
-
-        @NotNull String email,
-        @NotNull String password
-
-
+        @NotBlank String email,
+        @NotBlank String password
 ) {
 }

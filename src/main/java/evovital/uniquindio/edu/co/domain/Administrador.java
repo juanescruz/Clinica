@@ -2,6 +2,7 @@ package evovital.uniquindio.edu.co.domain;
 
 import jakarta.persistence.Entity;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 
@@ -11,7 +12,7 @@ import java.io.Serializable;
 @Setter
 @ToString
 @EqualsAndHashCode(callSuper = true)
-// @PrimaryKeyJoinColumn(name = "administrador_id")
+@SuperBuilder
 public class Administrador extends Usuario implements Serializable {
 
 }

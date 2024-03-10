@@ -24,7 +24,6 @@ public class Medico extends Usuario implements Serializable {
     private String telefono;
 
     @Lob
-    @Column(nullable = false)
     private String urlFotoPersonal;
 
     @OneToMany(mappedBy = "medico")
@@ -34,13 +33,10 @@ public class Medico extends Usuario implements Serializable {
     @ManyToOne
     private Especialidad especialidad;
 
-    @Column(nullable = false, length = 1)
-    private boolean estaActivo;
-
     @OneToMany(mappedBy = "medico")
     private List<HorarioAtencion> horarios;
 
-    @ManyToMany(mappedBy = "medicos")
+    @OneToMany(mappedBy = "medico")
     private List<DiaLibre> diasLibres;
 
 }

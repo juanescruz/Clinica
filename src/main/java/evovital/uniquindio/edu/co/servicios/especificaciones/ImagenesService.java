@@ -1,11 +1,13 @@
 package evovital.uniquindio.edu.co.servicios.especificaciones;
 
-import java.io.File;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.Map;
 
 public interface ImagenesService {
 
-    String subirImagen(File imagen);
+    Map subirImagen(MultipartFile imagen) throws Exception;
 
-    File convertirImagen(String imagenCodificada);
+    Map eliminarImagen(String idImagen) throws Exception;
 
 }

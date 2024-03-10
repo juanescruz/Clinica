@@ -2,6 +2,7 @@ package evovital.uniquindio.edu.co.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 @ToString
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@SuperBuilder
 public class Consulta implements Serializable {
 
     @Id
@@ -24,11 +26,10 @@ public class Consulta implements Serializable {
     @ManyToOne
     private Medico medico;
 
-    @JoinColumn(nullable = false)
-    @OneToOne
+    @OneToOne (mappedBy = "consulta")
     private Pqrs pqrs;
 
-    @OneToOne
+    @OneToOne (mappedBy = "consulta")
     private AtencionConsulta atencionConsulta;
 
     @JoinColumn(nullable = false)

@@ -1,41 +1,56 @@
 package evovital.uniquindio.edu.co.controllers;
 
-import evovital.uniquindio.edu.co.domain.Medico;
-import evovital.uniquindio.edu.co.domain.Usuario;
-import evovital.uniquindio.edu.co.repositories.MedicoRepository;
-import evovital.uniquindio.edu.co.repositories.UsuarioRepository;
+import evovital.uniquindio.edu.co.dto.atencionConsulta.AtencionConsultaDTOMedico;
+import evovital.uniquindio.edu.co.dto.auxiliar.MensajeDTO;
+import evovital.uniquindio.edu.co.dto.consulta.ConsultaDTOMedico;
+import evovital.uniquindio.edu.co.dto.consulta.DetalleConsultaDTOMedico;
+import evovital.uniquindio.edu.co.servicios.especificaciones.MedicoService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.List;
+@CrossOrigin
+@RequiredArgsConstructor
 @RestController
-@RequestMapping("/medicos")
+@RequestMapping("/api/medico")
+@SecurityRequirement(name = "bearerAuth")
 public class MedicoController {
 
-    private final MedicoRepository medicoRepository;
-    private final UsuarioRepository usuarioRepository;
+    private final MedicoService medicoService;
 
-    public MedicoController(MedicoRepository medicoRepository, UsuarioRepository usuarioRepository) {
-        this.medicoRepository = medicoRepository;
-        this.usuarioRepository = usuarioRepository;
+    @GetMapping("/consulta/filtrar/pendiente/{idMedico}")
+    public ResponseEntity<MensajeDTO<List<ConsultaDTOMedico>>> listarConsultasPendientes(@PathVariable Long idMedico) {
+        return ResponseEntity.ok().body( new MensajeDTO<>(false, medicoService.listarConsultasPendientes(idMedico)) );
     }
 
-    @PostMapping
-    public ResponseEntity<Usuario> crearMedico() {
+    @GetMapping("/consulta/obtener/{idConsulta}")
+    public ResponseEntity<MensajeDTO<DetalleConsultaDTOMedico>> obtenerConsulta(@PathVariable Long idConsulta) {
+        return ResponseEntity.ok().body( new MensajeDTO<>(false, medicoService.verDetalleConsulta(idConsulta)) );
+    }
 
-        Usuario medico = Medico.builder()
-                .cedula("12345")
-                .email("holamundo@hola.com")
-                .ciudadResidencia("Bogotá")
-                .estaActivo(true)
-                .nombre("Edwin")
-                .password("hola")
-                .telefono("12355")
-                .urlFotoPersonal("hola.com")
-                .build();
+    @PostMapping("/consulta/atender/{idConsulta}")
+    public ResponseEntity<MensajeDTO<String>> atenderConsulta(@PathVariable Long idConsulta, @Valid @RequestBody AtencionConsultaDTOMedico atencionConsultaDTOMedico) throws Exception {
+        medicoService.atenderConsulta(idConsulta, atencionConsultaDTOMedico);
+        return ResponseEntity.ok().body( new MensajeDTO<>(false, "consulta atendida con exito") );
+    }
 
-        return ResponseEntity.ok(usuarioRepository.save(medico));
+    @GetMapping("/consulta/filtrar/paciente/{idMedico}/{idPaciente}")
+    public ResponseEntity<MensajeDTO<List<ConsultaDTOMedico>>> listarConsultasPaciente(@PathVariable Long idMedico, @PathVariable Long idPaciente) {
+        return ResponseEntity.ok().body( new MensajeDTO<>(false, medicoService.listarConsultasPaciente(idMedico, idPaciente)) );
+    }
+
+    @PostMapping("/consulta/agendar-dia-libre/{idMedico}/{fecha}")
+    public ResponseEntity<MensajeDTO<Boolean>> agendarDiaLibre(@PathVariable Long idMedico, @PathVariable LocalDate fecha) throws Exception {
+        return ResponseEntity.ok().body( new MensajeDTO<>(false, medicoService.agendarDiaLibre(idMedico, fecha)) );
+    }
+
+    @GetMapping("/consulta/filtrar/realizadas/{idMedico}")
+    public ResponseEntity<MensajeDTO<List<ConsultaDTOMedico>>> listarConsultasRealizadas(@PathVariable Long idMedico) {
+        return ResponseEntity.ok().body( new MensajeDTO<>(false, medicoService.listarConsultasRealizadasMedico(idMedico)) );
     }
 
 }

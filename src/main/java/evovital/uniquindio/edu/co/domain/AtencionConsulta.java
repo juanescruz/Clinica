@@ -2,6 +2,7 @@ package evovital.uniquindio.edu.co.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 
@@ -10,6 +11,7 @@ import java.io.Serializable;
 @Setter
 @ToString
 @NoArgsConstructor
+@SuperBuilder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class AtencionConsulta implements Serializable {
 
@@ -19,7 +21,7 @@ public class AtencionConsulta implements Serializable {
     private Long id;
 
     @JoinColumn(nullable = false)
-    @OneToOne (mappedBy = "atencionConsulta")
+    @OneToOne
     private Consulta consulta;
 
     @Column(nullable = false)

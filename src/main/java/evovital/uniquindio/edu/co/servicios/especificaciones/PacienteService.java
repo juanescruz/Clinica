@@ -1,12 +1,11 @@
 package evovital.uniquindio.edu.co.servicios.especificaciones;
 
-import evovital.uniquindio.edu.co.domain.Paciente;
 import evovital.uniquindio.edu.co.dto.consulta.ConsultaDTOPaciente;
 import evovital.uniquindio.edu.co.dto.consulta.DetalleConsultaDTOPaciente;
 import evovital.uniquindio.edu.co.dto.consulta.InfoConsultaDTO;
-import evovital.uniquindio.edu.co.dto.login.AuthLoginDto;
 import evovital.uniquindio.edu.co.dto.mensaje.MensajeDTOUsuario;
 import evovital.uniquindio.edu.co.dto.paciente.PacienteDTO;
+import evovital.uniquindio.edu.co.dto.paciente.PacienteDTOPaciente;
 import evovital.uniquindio.edu.co.dto.pqrs.PQRSDTOPaciente;
 import evovital.uniquindio.edu.co.dto.pqrs.PQRSDTOPacienteReq;
 
@@ -16,23 +15,23 @@ import java.util.List;
 
 public interface PacienteService {
 
-    boolean registrarse(PacienteDTO pacienteDTO);
+    Long registrarse(PacienteDTO pacienteDTO);
 
-    boolean editarPerfil(int idPaciente, PacienteDTO pacienteDTO);
+    Long editarPerfil(Long idPaciente, PacienteDTO pacienteDTO) throws Exception;
 
-    PacienteDTO eliminarCuenta(int idPaciente);
+    PacienteDTO eliminarCuenta(Long idPaciente);
 
-    boolean enviarLinkRecuperacion(String emailPaciente);
+    void enviarLinkRecuperacion(String emailPaciente);
 
-    boolean cambiarPassword(int idPaciente, String password);
+    void cambiarPassword(Long idPaciente, String password);
 
-    void agendarCita(InfoConsultaDTO consultaDTO);
+    void agendarConsulta(InfoConsultaDTO consultaDTO);
 
-    void crearPQR(PQRSDTOPacienteReq pqrsPaciente);
+    void crearPQRS(PQRSDTOPacienteReq pqrsPaciente);
 
     List<PQRSDTOPaciente> listarPQRSPaciente(Long idPaciente);
 
-    void responderPQRS(Long idPQRS, MensajeDTOUsuario mensajeUsuario);
+    Long responderPQRS(MensajeDTOUsuario mensajeUsuario);
 
     List<ConsultaDTOPaciente> listarConsultasPaciente(Long idPaciente);
 
@@ -42,11 +41,9 @@ public interface PacienteService {
 
     DetalleConsultaDTOPaciente verDetalleConsulta(Long idConsulta);
 
-    boolean reagendarConsulta(Long idConsulta, LocalDateTime fechaYHora);
+    Long reagendarConsulta(Long idConsulta, LocalDateTime fechaYHora);
 
-    boolean calificarPQRS(Long idPQRS, int calificacion);
+    Long calificarPQRS(Long idPQRS, int calificacion);
 
-    boolean isPaciente(AuthLoginDto loginDto);
-
-    Paciente signIn(AuthLoginDto loginDto);
+    PacienteDTOPaciente verPerfil(Long idPaciente);
 }

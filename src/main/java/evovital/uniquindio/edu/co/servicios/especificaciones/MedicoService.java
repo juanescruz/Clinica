@@ -13,11 +13,11 @@ public interface MedicoService {
 
     DetalleConsultaDTOMedico verDetalleConsulta(Long idConsulta);
 
-    void atenderConsulta(Long idConsulta, AtencionConsultaDTOMedico atencionConsultaMedico);
+    void atenderConsulta(Long idConsulta, AtencionConsultaDTOMedico atencionConsultaMedico) throws Exception;
 
-    List<ConsultaDTOMedico> listarConsultasPacientes(Long idMedico, Long idPaciente);
+    List<ConsultaDTOMedico> listarConsultasPaciente(Long idMedico, Long idPaciente);
 
-    boolean agendarDiaLibre(Long idMedico, LocalDate diaLibre);
+    boolean agendarDiaLibre(Long idMedico, LocalDate diaLibre) throws Exception;
 
     List<ConsultaDTOMedico> listarConsultasRealizadasMedico(Long idMedico);
 

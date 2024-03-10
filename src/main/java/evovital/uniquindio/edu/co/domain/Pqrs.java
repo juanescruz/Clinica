@@ -1,7 +1,9 @@
 package evovital.uniquindio.edu.co.domain;
 
+import evovital.uniquindio.edu.co.dto.pqrs.PQRSDTOPaciente;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -13,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@SuperBuilder
 public class Pqrs implements Serializable {
 
     @Id
@@ -21,7 +24,7 @@ public class Pqrs implements Serializable {
     private Long id;
 
     @JoinColumn(nullable = false)
-    @OneToOne (mappedBy = "pqrs")
+    @OneToOne
     private Consulta consulta;
 
     @JoinColumn(nullable = false)
@@ -34,4 +37,16 @@ public class Pqrs implements Serializable {
     @OneToMany(mappedBy = "pqrs")
     private List<Mensaje> mensajes;
 
+    @Column
+    private int calificacion;
+
+    public PQRSDTOPaciente toPQRSDTOPaciente() {
+
+        return new PQRSDTOPaciente(
+                getId(),
+                getEstadoPqrs().getEstado(),
+                getFechaCreacion()
+        );
+
+    }
 }

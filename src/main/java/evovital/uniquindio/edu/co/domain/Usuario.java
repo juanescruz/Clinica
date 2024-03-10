@@ -28,7 +28,7 @@ public abstract class Usuario implements Serializable {
     @Column(nullable = false, length = 31, unique = true)
     private String email;
 
-    @Column(nullable = false, length = 31)
+    @Column(nullable = false)
     private String password;
 
     @Column(length = 31)
@@ -39,5 +39,8 @@ public abstract class Usuario implements Serializable {
 
     @Column(nullable = false, unique = true)
     private String cedula;
+
+    @Column(nullable = false, length = 1)
+    private boolean estaActivo;
 
 }
