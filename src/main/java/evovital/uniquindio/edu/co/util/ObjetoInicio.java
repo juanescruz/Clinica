@@ -18,8 +18,8 @@ public class ObjetoInicio implements CommandLineRunner {
     private final EstadoDiaLibreRepository estadoDiaLibreRepository;
     private final EstadoConsultaRepository estadoConsultaRepository;
     private final AdministradorRepository administradorRepository;
+    private final MedicoRepository medicoRepository;
 
-    //TODO Parra
     public static final List<String> ciudades = List.of(
             "Armenia",
             "Barranquilla",
@@ -84,10 +84,12 @@ public class ObjetoInicio implements CommandLineRunner {
     );
 
     private final List<Especialidad> especialidades = List.of(
+            Especialidad.builder().nombre("Medicina General").build(),
             Especialidad.builder().nombre("Cardiologia").build(),
             Especialidad.builder().nombre("Psicologia").build(),
             Especialidad.builder().nombre("Urologia").build()
     );
+
 
     private final List<EstadoPqrs> estadosPqrs = List.of(
             EstadoPqrs.builder().estado("Archivado").build(),
@@ -110,11 +112,11 @@ public class ObjetoInicio implements CommandLineRunner {
 
     private final List<Administrador> administradores = List.of(
             Administrador.builder()
-                    .nombre("Camilo")
-                    .email("holamundo@gmail.com")
+                    .nombre("admin_arias")
+                    .email("admin@gmail.com")
                     .cedula("124923")
                     .estaActivo(true)
-                    .password(new BCryptPasswordEncoder().encode("holamundo"))
+                    .password(new BCryptPasswordEncoder().encode("adminarias123"))
                     .build()
     );
 

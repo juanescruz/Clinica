@@ -11,7 +11,7 @@ import java.util.List;
 
 public record MedicoDTO(
 
-        @Pattern(regexp = "\\d+") Long id,
+        Long id,
         @NotNull @Length(max = 255) @Pattern(regexp = "\\d+") String cedula,
         @NotNull @Length(max = 63) @Pattern(regexp = "^[a-zA-Z]+$") String nombre,
 
@@ -25,7 +25,7 @@ public record MedicoDTO(
 
         @NotNull @Length(max = 31) @Pattern(regexp = "\\d+") String telefono,
 
-        @NotNull @Pattern(regexp = "\\d+") Long idEspecialidad,
+        @NotNull Long idEspecialidad,
 
         List<HorarioDTO> horarios
 

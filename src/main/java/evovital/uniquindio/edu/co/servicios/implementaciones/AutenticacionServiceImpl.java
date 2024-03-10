@@ -22,7 +22,6 @@ public class AutenticacionServiceImpl implements AutenticacionService {
     private final UsuarioRepository usuarioRepository;
     private final JWTUtils jwtUtils;
 
-    // TODO: test missing
     @Override
     public TokenDTO login(AuthLoginDto authLoginDto) throws Exception {
 
@@ -47,12 +46,12 @@ public class AutenticacionServiceImpl implements AutenticacionService {
         if( usuario instanceof Paciente){
 
             rol = "paciente";
-            nombre = ((Paciente) usuario).getNombre();
+            nombre = (usuario).getNombre();
 
         }else if( usuario instanceof Medico){
 
             rol = "medico";
-            nombre = ((Medico) usuario).getNombre();
+            nombre = (usuario).getNombre();
 
         }else{
 

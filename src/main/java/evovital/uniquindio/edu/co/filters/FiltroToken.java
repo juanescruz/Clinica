@@ -44,16 +44,18 @@ public class FiltroToken extends OncePerRequestFilter {
                 if (requestURI.startsWith("/api/paciente") || requestURI.startsWith("/api/medico")
 
                         || requestURI.startsWith("/api/administrador")) {
+
                     if (token != null) {
                         Jws<Claims> jws = jwtUtils.parseJwt(token);
+
                         if (
                                 (requestURI.startsWith("/api/paciente") &&
 
                                         !jws.getBody().get("rol").equals("paciente")) ||
 
-                                        (requestURI.startsWith("/api/medico") &&
+                                        (  requestURI.startsWith("/api/medico") &&
 
-                                                !jws.getBody().get("rol").equals("medico")) ||
+                                                !jws.getBody().get("rol").equals("medico")  ) ||
 
                                         (requestURI.startsWith("/api/administrador") &&
 
