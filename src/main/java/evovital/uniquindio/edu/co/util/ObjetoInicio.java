@@ -22,26 +22,17 @@ public class ObjetoInicio implements CommandLineRunner {
 
     public static final List<String> ciudades = List.of(
             "Armenia",
-            "Barranquilla",
-            "Bogotá",
-            "Bucaramanga",
-            "Cali",
-            "Cartagena",
-            "Cúcuta",
-            "Ibagué",
-            "Manizales",
-            "Medellín",
-            "Montería",
-            "Neiva",
-            "Pasto",
-            "Pereira",
-            "Popayán",
-            "Santa Marta",
-            "Sincelejo",
-            "Tunja",
-            "Valledupar",
-            "Villavicencio",
-            "Yopal"
+            "Filandia",
+            "Calarca",
+            "Circasia",
+            "Montenegro",
+            "Quimbaya",
+            "Salento",
+            "Buenavista",
+            "Cordoba",
+            "La Tebaida",
+            "Pijao",
+            "Genova"
     );
 
 

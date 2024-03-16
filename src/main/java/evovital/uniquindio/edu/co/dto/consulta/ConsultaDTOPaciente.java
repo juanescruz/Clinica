@@ -9,7 +9,9 @@ public record ConsultaDTOPaciente(
 
         MedicoDTOPaciente medico,
         String estadoConsulta,
-        LocalDateTime fechaYHoraAtencion
+        LocalDateTime fechaYHoraAtencion,
+
+        String motivo
 
 ) {
 
@@ -18,7 +20,8 @@ public record ConsultaDTOPaciente(
         this(
                 new MedicoDTOPaciente(consulta.getMedico()),
                 consulta.getEstadoConsulta().getEstado(),
-                consulta.getFechaYHoraAtencion()
+                consulta.getFechaYHoraAtencion(),
+                consulta.getMotivo()
         );
     }
 
