@@ -50,4 +50,8 @@ public class Consulta implements Serializable {
     @Column(nullable = false)
     private String motivo;
 
+    @Lob
+    @Column(nullable = false)
+    private String metodoPago;
+
 }
