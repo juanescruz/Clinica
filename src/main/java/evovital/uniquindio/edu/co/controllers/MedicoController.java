@@ -4,6 +4,7 @@ import evovital.uniquindio.edu.co.dto.atencionConsulta.AtencionConsultaDTOMedico
 import evovital.uniquindio.edu.co.dto.auxiliar.MensajeDTO;
 import evovital.uniquindio.edu.co.dto.consulta.ConsultaDTOMedico;
 import evovital.uniquindio.edu.co.dto.consulta.DetalleConsultaDTOMedico;
+import evovital.uniquindio.edu.co.dto.consulta.MetodoPagoDTO;
 import evovital.uniquindio.edu.co.servicios.especificaciones.MedicoService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
@@ -51,6 +52,11 @@ public class MedicoController {
     @GetMapping("/consulta/filtrar/realizadas/{idMedico}")
     public ResponseEntity<MensajeDTO<List<ConsultaDTOMedico>>> listarConsultasRealizadas(@PathVariable Long idMedico) {
         return ResponseEntity.ok().body( new MensajeDTO<>(false, medicoService.listarConsultasRealizadasMedico(idMedico)) );
+    }
+
+    @PostMapping("/consulta/hacer-factura/{idConsulta}")
+    public ResponseEntity<MensajeDTO<Boolean>> hacerFactura(@PathVariable Long idConsulta, @RequestBody MetodoPagoDTO pago) throws Exception {
+        return ResponseEntity.ok().body( new MensajeDTO<>(false, medicoService.hacerFactura(idConsulta, pago)) );
     }
 
 }

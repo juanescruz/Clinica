@@ -10,10 +10,7 @@ public record InfoConsultaDTO(
         Long idPaciente,
         Long idMedico,
         LocalDateTime fechaYHoraDeAtencion,
-        String motivo,
-
-        String metodoPago
-
+        String motivo
 ) {
     public Consulta toEntity() {
 
@@ -21,8 +18,6 @@ public record InfoConsultaDTO(
                 .fechaCreacion(LocalDate.now())
                 .fechaYHoraAtencion(fechaYHoraDeAtencion)
                 .motivo(motivo)
-                .metodoPago(metodoPago)
                 .build();
-
     }
 }

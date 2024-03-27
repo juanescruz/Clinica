@@ -3,6 +3,7 @@ package evovital.uniquindio.edu.co.servicios.especificaciones;
 import evovital.uniquindio.edu.co.dto.atencionConsulta.AtencionConsultaDTOMedico;
 import evovital.uniquindio.edu.co.dto.consulta.ConsultaDTOMedico;
 import evovital.uniquindio.edu.co.dto.consulta.DetalleConsultaDTOMedico;
+import evovital.uniquindio.edu.co.dto.consulta.MetodoPagoDTO;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -21,4 +22,5 @@ public interface MedicoService {
 
     List<ConsultaDTOMedico> listarConsultasRealizadasMedico(Long idMedico);
 
+    Boolean hacerFactura(Long idConsulta, MetodoPagoDTO pago);
 }

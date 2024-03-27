@@ -6,6 +6,7 @@ import evovital.uniquindio.edu.co.domain.DiaLibre;
 import evovital.uniquindio.edu.co.dto.atencionConsulta.AtencionConsultaDTOMedico;
 import evovital.uniquindio.edu.co.dto.consulta.ConsultaDTOMedico;
 import evovital.uniquindio.edu.co.dto.consulta.DetalleConsultaDTOMedico;
+import evovital.uniquindio.edu.co.dto.consulta.MetodoPagoDTO;
 import evovital.uniquindio.edu.co.repositories.*;
 import evovital.uniquindio.edu.co.servicios.especificaciones.MedicoService;
 import lombok.RequiredArgsConstructor;
@@ -115,5 +116,15 @@ public class MedicoServiceImpl implements MedicoService {
     @Override
     public List<ConsultaDTOMedico> listarConsultasRealizadasMedico(Long idMedico) {
         return consultaRepository.findAllByEstadoConsulta_EstadoAndMedico_Id("Atendida", idMedico).stream().map(ConsultaDTOMedico::new).toList();
+    }
+
+    @Override
+    public Boolean hacerFactura(Long idConsulta, MetodoPagoDTO pago) {
+
+        Consulta consulta = consultaRepository.findById(idConsulta).orElseThrow(() -> new RuntimeException("No se encontro la consulta"));
+        consulta.setMetodoPago(pago.toEntity());
+        consultaRepository.save(consulta);
+        return true;
+
     }
 }
