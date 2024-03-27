@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
 
 public interface ConsultaRepository extends JpaRepository<Consulta, Long> {
@@ -23,4 +24,5 @@ public interface ConsultaRepository extends JpaRepository<Consulta, Long> {
 
     List<Consulta> findAllByFechaYHoraAtencionAndEstadoConsulta_Estado(LocalDateTime fechaYHoraDeAtencion, String estado);
 
+    Collection<Consulta> findAllByMedico_Id(Long idMedico);
 }

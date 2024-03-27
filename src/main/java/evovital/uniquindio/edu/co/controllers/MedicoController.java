@@ -59,4 +59,13 @@ public class MedicoController {
         return ResponseEntity.ok().body( new MensajeDTO<>(false, medicoService.hacerFactura(idConsulta, pago)) );
     }
 
+    @DeleteMapping("/consulta/cancelar/{idConsulta}")
+    public ResponseEntity<MensajeDTO<Boolean>> cancelarConsulta(@PathVariable Long idConsulta) throws Exception {
+        return ResponseEntity.ok().body( new MensajeDTO<>(false, medicoService.cancelarConsulta(idConsulta)) );
+    }
+
+    @GetMapping("/consulta/todas-consultas/{idMedico}")
+    public ResponseEntity<MensajeDTO<List<ConsultaDTOMedico>>> listarTodasConsultas(@PathVariable Long idMedico) {
+        return ResponseEntity.ok().body( new MensajeDTO<>(false, medicoService.listarTodasConsultas(idMedico)) );
+    }
 }

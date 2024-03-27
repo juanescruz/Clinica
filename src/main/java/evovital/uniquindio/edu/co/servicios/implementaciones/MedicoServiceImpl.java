@@ -127,4 +127,18 @@ public class MedicoServiceImpl implements MedicoService {
         return true;
 
     }
+
+    @Override
+    public Boolean cancelarConsulta(Long idConsulta) {
+
+        Consulta consulta = consultaRepository.findById(idConsulta).orElseThrow(() -> new RuntimeException("No se encontro la consulta"));
+        consulta.setEstadoConsulta(estadoConsultaRepository.findByEstado("Cancelada").orElseThrow(() -> new RuntimeException("No se encontro el estado")));
+        consultaRepository.save(consulta);
+        return true;
+    }
+
+    @Override
+    public List<ConsultaDTOMedico> listarTodasConsultas(Long idMedico) {
+        return consultaRepository.findAllByMedico_Id(idMedico).stream().map(ConsultaDTOMedico::new).toList();
+    }
 }

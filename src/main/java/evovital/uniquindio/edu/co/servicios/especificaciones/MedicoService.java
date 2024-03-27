@@ -23,4 +23,8 @@ public interface MedicoService {
     List<ConsultaDTOMedico> listarConsultasRealizadasMedico(Long idMedico);
 
     Boolean hacerFactura(Long idConsulta, MetodoPagoDTO pago);
+
+    Boolean cancelarConsulta(Long idConsulta);
+
+    List<ConsultaDTOMedico> listarTodasConsultas(Long idMedico);
 }

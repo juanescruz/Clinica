@@ -10,7 +10,8 @@ public record ConsultaDTOMedico(
         Long idConsulta,
         PacienteDTOMedico paciente,
         LocalDateTime fechaYHoraAtencion,
-        String motivo
+        String motivo,
+        String estado
 
 ) {
 
@@ -19,7 +20,8 @@ public record ConsultaDTOMedico(
                 consulta.getId(),
                 new PacienteDTOMedico(consulta.getPaciente()),
                 consulta.getFechaYHoraAtencion(),
-                consulta.getMotivo()
+                consulta.getMotivo(),
+                consulta.getEstadoConsulta().getEstado()
         );
     }
 
