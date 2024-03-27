@@ -3,10 +3,12 @@ package evovital.uniquindio.edu.co.servicios.implementaciones;
 import evovital.uniquindio.edu.co.domain.AtencionConsulta;
 import evovital.uniquindio.edu.co.domain.Consulta;
 import evovital.uniquindio.edu.co.domain.DiaLibre;
+import evovital.uniquindio.edu.co.domain.Paciente;
 import evovital.uniquindio.edu.co.dto.atencionConsulta.AtencionConsultaDTOMedico;
 import evovital.uniquindio.edu.co.dto.consulta.ConsultaDTOMedico;
 import evovital.uniquindio.edu.co.dto.consulta.DetalleConsultaDTOMedico;
 import evovital.uniquindio.edu.co.dto.consulta.MetodoPagoDTO;
+import evovital.uniquindio.edu.co.dto.paciente.PacienteDTO;
 import evovital.uniquindio.edu.co.repositories.*;
 import evovital.uniquindio.edu.co.servicios.especificaciones.MedicoService;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +29,7 @@ public class MedicoServiceImpl implements MedicoService {
     private final MedicoRepository medicoRepository;
     private final EstadoDiaLibreRepository estadoDiaLibreRepository;
     private final EstadoConsultaRepository estadoConsultaRepository;
+    private final PacienteRepository pacienteRepository;
 
     /**
      * Metodo que lista las consultas pendientes de un medico
@@ -140,5 +143,12 @@ public class MedicoServiceImpl implements MedicoService {
     @Override
     public List<ConsultaDTOMedico> listarTodasConsultas(Long idMedico) {
         return consultaRepository.findAllByMedico_Id(idMedico).stream().map(ConsultaDTOMedico::new).toList();
+    }
+
+    @Override
+    public PacienteDTO getInfoPaciente(Long idConsulta) {
+        Consulta consulta = consultaRepository.findById(idConsulta).orElseThrow(() -> new RuntimeException("No se encontro la consulta"));
+        Paciente paciente = consulta.getPaciente();
+        return new PacienteDTO(paciente);
     }
 }

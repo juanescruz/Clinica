@@ -1,10 +1,12 @@
 package evovital.uniquindio.edu.co.controllers;
 
+import evovital.uniquindio.edu.co.domain.Paciente;
 import evovital.uniquindio.edu.co.dto.atencionConsulta.AtencionConsultaDTOMedico;
 import evovital.uniquindio.edu.co.dto.auxiliar.MensajeDTO;
 import evovital.uniquindio.edu.co.dto.consulta.ConsultaDTOMedico;
 import evovital.uniquindio.edu.co.dto.consulta.DetalleConsultaDTOMedico;
 import evovital.uniquindio.edu.co.dto.consulta.MetodoPagoDTO;
+import evovital.uniquindio.edu.co.dto.paciente.PacienteDTO;
 import evovital.uniquindio.edu.co.servicios.especificaciones.MedicoService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
@@ -67,5 +69,10 @@ public class MedicoController {
     @GetMapping("/consulta/todas-consultas/{idMedico}")
     public ResponseEntity<MensajeDTO<List<ConsultaDTOMedico>>> listarTodasConsultas(@PathVariable Long idMedico) {
         return ResponseEntity.ok().body( new MensajeDTO<>(false, medicoService.listarTodasConsultas(idMedico)) );
+    }
+
+    @GetMapping("/consulta/informacion-paciente/{idConsulta}")
+    public ResponseEntity<MensajeDTO<PacienteDTO>> listarConsultasPaciente(@PathVariable Long idConsulta) {
+        return ResponseEntity.ok().body( new MensajeDTO<>(false, medicoService.getInfoPaciente(idConsulta)) );
     }
 }

@@ -4,6 +4,7 @@ import evovital.uniquindio.edu.co.dto.atencionConsulta.AtencionConsultaDTOMedico
 import evovital.uniquindio.edu.co.dto.consulta.ConsultaDTOMedico;
 import evovital.uniquindio.edu.co.dto.consulta.DetalleConsultaDTOMedico;
 import evovital.uniquindio.edu.co.dto.consulta.MetodoPagoDTO;
+import evovital.uniquindio.edu.co.dto.paciente.PacienteDTO;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -27,4 +28,5 @@ public interface MedicoService {
     Boolean cancelarConsulta(Long idConsulta);
 
     List<ConsultaDTOMedico> listarTodasConsultas(Long idMedico);
+    PacienteDTO getInfoPaciente(Long idPaciente);
 }
