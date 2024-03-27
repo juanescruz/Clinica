@@ -50,7 +50,6 @@ public class Consulta implements Serializable {
     @Column(nullable = false)
     private String motivo;
 
-    @JoinColumn(nullable = false)
-    @OneToOne
+    @OneToOne(mappedBy = "consulta")
     private MetodoPago metodoPago;
 }

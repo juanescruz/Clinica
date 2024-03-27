@@ -12,12 +12,14 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @SuperBuilder
 public class MetodoPago {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private Long id;
 
-    @OneToOne(mappedBy = "metodoPago")
+    @JoinColumn(nullable = false)
+    @OneToOne
     private Consulta consulta;
 
     @Column(nullable = false)

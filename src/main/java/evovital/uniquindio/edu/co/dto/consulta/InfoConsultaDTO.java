@@ -1,6 +1,7 @@
 package evovital.uniquindio.edu.co.dto.consulta;
 
 import evovital.uniquindio.edu.co.domain.Consulta;
+import evovital.uniquindio.edu.co.domain.MetodoPago;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -14,7 +15,7 @@ public record InfoConsultaDTO(
 ) {
     public Consulta toEntity() {
 
-        return Consulta.builder()
+        return  Consulta.builder()
                 .fechaCreacion(LocalDate.now())
                 .fechaYHoraAtencion(fechaYHoraDeAtencion)
                 .motivo(motivo)
