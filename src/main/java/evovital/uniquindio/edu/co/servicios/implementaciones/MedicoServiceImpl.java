@@ -123,18 +123,10 @@ public class MedicoServiceImpl implements MedicoService {
 
         Consulta consulta = consultaRepository.findById(idConsulta)
                 .orElseThrow(() -> new RuntimeException("No se encontró la consulta"));
-
-        // Convertir el DTO a una entidad MetodoPago
         MetodoPago metodoPago = pago.toEntity();
-
-        // Establecer la relación entre la consulta y el método de pago
         consulta.setMetodoPago(metodoPago);
         metodoPago.setConsulta(consulta);
-
-        // Guardar el método de pago primero
         metodoPagoRepository.save(metodoPago);
-
-        // Guardar la consulta
         consultaRepository.save(consulta);
 
         return true;
