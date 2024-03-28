@@ -9,7 +9,7 @@ public record MetodoPagoDTO(
         String descripcion,
         String estado,
         String fecha,
-        String metodo_pago,
+        String metodoPago,
         String valor
 
 ) {
@@ -20,7 +20,7 @@ public record MetodoPagoDTO(
                 .descripcion(descripcion)
                 .estado(estado)
                 .fecha(fecha)
-                .metodoPago(metodo_pago)
+                .metodoPago(metodoPago)
                 .valor(valor)
                 .build();
 

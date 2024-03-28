@@ -35,9 +35,6 @@ public class MetodoPago {
     private String fecha;
 
     @Column(nullable = false)
-    private String hora;
-
-    @Column(nullable = false)
     private String valor;
 
 }

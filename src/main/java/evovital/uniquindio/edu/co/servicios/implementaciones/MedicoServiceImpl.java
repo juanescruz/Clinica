@@ -1,9 +1,6 @@
 package evovital.uniquindio.edu.co.servicios.implementaciones;
 
-import evovital.uniquindio.edu.co.domain.AtencionConsulta;
-import evovital.uniquindio.edu.co.domain.Consulta;
-import evovital.uniquindio.edu.co.domain.DiaLibre;
-import evovital.uniquindio.edu.co.domain.Paciente;
+import evovital.uniquindio.edu.co.domain.*;
 import evovital.uniquindio.edu.co.dto.atencionConsulta.AtencionConsultaDTOMedico;
 import evovital.uniquindio.edu.co.dto.consulta.ConsultaDTOMedico;
 import evovital.uniquindio.edu.co.dto.consulta.DetalleConsultaDTOMedico;
@@ -29,7 +26,7 @@ public class MedicoServiceImpl implements MedicoService {
     private final MedicoRepository medicoRepository;
     private final EstadoDiaLibreRepository estadoDiaLibreRepository;
     private final EstadoConsultaRepository estadoConsultaRepository;
-    private final PacienteRepository pacienteRepository;
+   private final MetodoPagoRepository metodoPagoRepository;
 
     /**
      * Metodo que lista las consultas pendientes de un medico
@@ -63,10 +60,10 @@ public class MedicoServiceImpl implements MedicoService {
         AtencionConsulta atencionConsulta = atencionConsultaMedico.toEntity();
         Consulta consulta = consultaRepository.findById(idConsulta).orElseThrow(() -> new RuntimeException("No se encontro la consulta"));
 
-        if (consulta.getMedico().getHorarios().stream().noneMatch(horarioAtencion -> horarioAtencion.getDia().equals(LocalDate.now().getDayOfWeek()) &&
+       /* if (consulta.getMedico().getHorarios().stream().noneMatch(horarioAtencion -> horarioAtencion.getDia().equals(LocalDate.now().getDayOfWeek()) &&
                 horarioAtencion.getInicio().isBefore(LocalTime.now()) &&
                 horarioAtencion.getFin().isAfter(LocalTime.now())
-        )) throw new Exception("El medico no atiende en el horario seleccionado");
+        )) throw new Exception("El medico no atiende en el horario seleccionado");*/
 
         atencionConsulta.setConsulta( consulta );
         consulta.setEstadoConsulta( estadoConsultaRepository.findByEstado("Atendida").orElseThrow(() -> new Exception("Estado no encontrado")));
@@ -124,9 +121,22 @@ public class MedicoServiceImpl implements MedicoService {
     @Override
     public Boolean hacerFactura(Long idConsulta, MetodoPagoDTO pago) {
 
-        Consulta consulta = consultaRepository.findById(idConsulta).orElseThrow(() -> new RuntimeException("No se encontro la consulta"));
-        consulta.setMetodoPago(pago.toEntity());
+        Consulta consulta = consultaRepository.findById(idConsulta)
+                .orElseThrow(() -> new RuntimeException("No se encontró la consulta"));
+
+        // Convertir el DTO a una entidad MetodoPago
+        MetodoPago metodoPago = pago.toEntity();
+
+        // Establecer la relación entre la consulta y el método de pago
+        consulta.setMetodoPago(metodoPago);
+        metodoPago.setConsulta(consulta);
+
+        // Guardar el método de pago primero
+        metodoPagoRepository.save(metodoPago);
+
+        // Guardar la consulta
         consultaRepository.save(consulta);
+
         return true;
 
     }
