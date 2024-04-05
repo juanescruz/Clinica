@@ -21,18 +21,7 @@ public class ObjetoInicio implements CommandLineRunner {
     private final MedicoRepository medicoRepository;
 
     public static final List<String> ciudades = List.of(
-            "Armenia",
-            "Filandia",
-            "Calarca",
-            "Circasia",
-            "Montenegro",
-            "Quimbaya",
-            "Salento",
-            "Buenavista",
-            "Cordoba",
-            "La Tebaida",
-            "Pijao",
-            "Genova"
+            "Armenia"
     );
 
 
