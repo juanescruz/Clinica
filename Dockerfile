@@ -7,8 +7,8 @@ WORKDIR /home/gradle/src
 # Copy Gradle project
 COPY --chown=gradle:gradle . .
 
-# Build Spring Boot application
-RUN gradle clean bootJar
+# Build Spring Boot application using Gradle wrapper
+RUN ./gradlew clean bootJar
 
 # Use another stage for the final image
 FROM eclipse-temurin:17-jdk-jammy
