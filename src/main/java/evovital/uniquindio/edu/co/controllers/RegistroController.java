@@ -17,7 +17,7 @@ import java.util.List;
 @RequestMapping("/api/registro")
 
 public class RegistroController {
-    //comment
+    //comment 2
     @GetMapping("/ciudades")
     public ResponseEntity<MensajeDTO<List<String>>> listarCiudades() {
         return ResponseEntity.ok().body(new MensajeDTO<>(false, ObjetoInicio.ciudades));
