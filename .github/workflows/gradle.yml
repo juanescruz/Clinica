@@ -29,10 +29,10 @@ jobs:
           distribution: 'temurin'
 
       - name: Path
-        run: echo pwd
+        run: pwd
 
       - name: List
-        run: ls -lasht
+        run: ls -lasht /src
 
 
       - name: Ejecutar Tests
