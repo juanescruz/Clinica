@@ -14,8 +14,14 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    env:
+      MAIL: 'b7531752@gmail.com'
+
     steps:
       - uses: actions/checkout@v3
+      - name: imprimir variables
+        run: | 
+              echo 'EL CORREO ES: $MAIL'
       - name: Set up JDK 19
         uses: actions/setup-java@v3
         with:

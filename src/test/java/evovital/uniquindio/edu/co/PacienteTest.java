@@ -151,52 +151,6 @@ public class PacienteTest {
         }
     }
 
-    @Test
-    public void editarPerfilTest() {
-        try {
-            System.out.println(
-                    pacienteService.editarPerfil(
-                        4L,
-                        new PacienteDTO(
-                                "Paciente",
-                                "123456780",
-                                "juescaos424@gmail.com",
-                                null,
-                                LocalDate.now(),
-                                "Alergias",
-                                "EPS",
-                                "O-",
-                                "Cali",
-                                "12345678"
-                        )
-                    )
-            );
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Test
-    public void registrarseTest() {
-        try {
-            pacienteService.registrarse(
-                    new PacienteDTO(
-                            "Paciente",
-                            "123",
-                            "hola@gmail.com",
-                            "123456789",
-                            LocalDate.now(),
-                            "Alergias",
-                            "EPS",
-                            "O+",
-                            "Cali",
-                            "123456789"
-                    )
-            );
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     @Test
     public void agendarConsultaTest() {

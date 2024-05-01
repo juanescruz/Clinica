@@ -31,6 +31,10 @@ dependencies {
     runtimeOnly 'org.postgresql:postgresql'
 }
 
+test {
+    useJUnitPlatform()
+}
+
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
