@@ -27,10 +27,6 @@ jobs:
         with:
           java-version: '19'
           distribution: 'temurin'
-      - name: Copy properties file
-        uses: actions/download-artifact@v3
-        with:
-          name: properties
 
       - name: Log properties file
         run: cat properties
