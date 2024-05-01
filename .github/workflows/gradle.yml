@@ -28,5 +28,6 @@ jobs:
           java-version: '19'
           distribution: 'temurin'
 
-      - name: Debug tests
-        run: gradle test --tests "EmailTest.java" --info
+      - name: Ejecutar Tests
+        run: |
+            ./gradlew test --tests 'evovital/uniquindio/edu/co/EmailTest.java'
