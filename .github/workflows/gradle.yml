@@ -29,4 +29,5 @@ jobs:
           distribution: 'temurin'
 
       - name: Ejecutar Tests
-        run: ./gradlew test --tests "/src/test/java/evovital/uniquindio/edu/co/EmailTest.java"
+        working-directory: ./src/test/java/evovital/uniquindio/edu/co
+        run: ./gradlew test --tests "EmailTest.java"
