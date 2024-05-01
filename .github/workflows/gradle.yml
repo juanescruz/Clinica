@@ -30,4 +30,4 @@ jobs:
 
       - name: Ejecutar Tests
         run: |
-            ./gradlew test --tests 'evovital/uniquindio/edu/co/EmailTest.java'
+            ./gradlew test --tests 'src/test/java/evovital/uniquindio/edu/co/EmailTest.java'
