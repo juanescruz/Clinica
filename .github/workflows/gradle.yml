@@ -28,8 +28,5 @@ jobs:
           java-version: '19'
           distribution: 'temurin'
 
-      - name: Log properties file
-        run: cat properties
-
       - name: Debug tests
         run: gradle test --debug
