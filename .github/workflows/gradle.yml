@@ -36,5 +36,5 @@ jobs:
 
 
       - name: Ejecutar Tests
-        working-directory: ./src/test/java/evovital/uniquindio/edu/co
+        working-directory: /src/test/java/evovital/uniquindio/edu/co
         run: ./gradlew test --tests "EmailTest.java"
