@@ -28,6 +28,13 @@ jobs:
           java-version: '19'
           distribution: 'temurin'
 
+      - name: Path
+        run: echo pwd
+
+      - name: List
+        run: ls -lasht
+
+
       - name: Ejecutar Tests
         working-directory: ./src/test/java/evovital/uniquindio/edu/co
         run: ./gradlew test --tests "EmailTest.java"
