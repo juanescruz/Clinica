@@ -32,7 +32,7 @@ jobs:
         run: pwd
 
       - name: List
-        run: ls -lasht
+        run: ls -lasht src
 
 
       - name: Ejecutar Tests
