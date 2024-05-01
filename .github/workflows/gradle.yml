@@ -29,4 +29,4 @@ jobs:
           distribution: 'temurin'
 
       - name: Debug tests
-        run: gradle test --debug
+        run: gradle test --tests "src/test/java/evovital/uniquindio/edu/co/EmailTest.java" --info
