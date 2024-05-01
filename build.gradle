@@ -33,7 +33,10 @@ dependencies {
 
 test {
     useJUnitPlatform()
+    task.cacheIf { true }
 }
+
+
 
 configurations {
     compileOnly {
