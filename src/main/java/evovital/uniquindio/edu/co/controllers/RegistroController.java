@@ -1,6 +1,4 @@
-    package evovital.uniquindio.edu.co.controllers;
-
-
+package evovital.uniquindio.edu.co.controllers;
 import evovital.uniquindio.edu.co.dto.auxiliar.MensajeDTO;
 import evovital.uniquindio.edu.co.util.ObjetoInicio;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-@CrossOrigin
+
+@CrossOrigin("*")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/registro")
