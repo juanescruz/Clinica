@@ -31,9 +31,11 @@ dependencies {
     runtimeOnly 'org.postgresql:postgresql'
 }
 
-test {
-    useJUnitPlatform()
+java {
+    sourceCompatibility = '17'
+    targetCompatibility = '17'
 }
+
 
 
 configurations {
