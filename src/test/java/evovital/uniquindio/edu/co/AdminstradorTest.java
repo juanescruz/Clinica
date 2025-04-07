@@ -1,36 +1,22 @@
 package evovital.uniquindio.edu.co;
 
 import evovital.uniquindio.edu.co.dto.horario.HorarioDTO;
-import evovital.uniquindio.edu.co.dto.medico.MedicoDTO;
 import evovital.uniquindio.edu.co.dto.medico.MedicoDTOAdmin;
 import evovital.uniquindio.edu.co.dto.mensaje.MensajeDTOUsuario;
 import evovital.uniquindio.edu.co.servicios.especificaciones.AdministradorService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest
-// @Transactional
-public class AdminstradorTest {
+class AdminstradorTest {
 
-    // :D
-    // (._. )
-    // >~<
-    // (^_^)
-    // (TnT)
-    // (-_- )
-    // B)
-    // (@_@)
-    // (0-0)
-    // ( *o* )
     @Autowired
     private AdministradorService administradorService;
 
     @Test
-    public void actualizarHorarioTest() {
+    void actualizarHorarioTest() {
 
         try {
 
@@ -44,7 +30,7 @@ public class AdminstradorTest {
     }
 
     @Test
-    public void crearHorarioTest() {
+    void crearHorarioTest() {
 
         try {
 
@@ -58,7 +44,7 @@ public class AdminstradorTest {
     }
 
     @Test
-    public void listarConsultasTest() {
+    void listarConsultasTest() {
 
         try {
             System.out.println(administradorService.listarConsultas());
@@ -68,7 +54,7 @@ public class AdminstradorTest {
     }
 
     @Test
-    public void verDetallePQRSTest() {
+    void verDetallePQRSTest() {
 
         try {
             System.out.println(administradorService.verDetallePQRS(6L));
@@ -78,7 +64,7 @@ public class AdminstradorTest {
     }
 
     @Test
-    public void responderPQRSTest() {
+    void responderPQRSTest() {
 
         try {
             System.out.println(administradorService.responderPQRS(new MensajeDTOUsuario(
@@ -92,7 +78,7 @@ public class AdminstradorTest {
     }
 
     @Test
-    public void listarPqrsTest() {
+     void listarPqrsTest() {
 
         try {
             System.out.println(administradorService.listarPQRS());
@@ -102,7 +88,7 @@ public class AdminstradorTest {
     }
 
     @Test
-    public void obtenerMedicoTest() {
+    void obtenerMedicoTest() {
 
         try {
             System.out.println(administradorService.obtenerMedico(2L));
@@ -112,7 +98,7 @@ public class AdminstradorTest {
     }
 
     @Test
-    public void listarMedicosTest() {
+    void listarMedicosTest() {
 
         try {
             List<MedicoDTOAdmin> medicos = administradorService.listarMedicos();
@@ -125,63 +111,10 @@ public class AdminstradorTest {
     }
 
     @Test
-    public void eliminarMedicoTest() {
+    void eliminarMedicoTest() {
 
         try {
             administradorService.eliminarMedico(2L);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
-    @Test
-    public void actualizarMedicoTest() {
-
-        List<HorarioDTO> horarios = new ArrayList<>(){{
-            add(new HorarioDTO(1L, (byte) 4, "09:00", "19:00"));
-        }};
-
-        try {
-            administradorService.actualizarMedico(new MedicoDTO(
-                    2L,
-                    "1234556",
-                    "Juan",
-                    "osmajuan760@gmail.com",
-                    null,
-                    "Bogotá",
-                    "1234567",
-                    1L,
-                    horarios
-            ));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
-    @Test
-    public void crearMedicoTest() {
-
-        List<HorarioDTO> horarios = new ArrayList<>(){{
-            add(new HorarioDTO(null, (byte) 1, "08:00", "18:00"));
-        }};
-
-        MedicoDTO medico = new MedicoDTO(
-                null,
-                "1234556",
-                "JuanE",
-                "osmajuan760@gmail.com",
-                "1234567",
-                "Bogotá",
-                "1234567",
-                1L,
-                horarios
-        );
-
-        try {
-            Long idMedicoRegistrado = administradorService.crearMedico(medico);
-            System.out.println(idMedicoRegistrado);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

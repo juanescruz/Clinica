@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.time.LocalDate;
 
 @SpringBootTest
-public class MedicoTest {
+class MedicoTest {
 
     @Autowired
     private MedicoService medicoService;

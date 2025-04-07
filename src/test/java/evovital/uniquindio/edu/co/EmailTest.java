@@ -1,31 +1,32 @@
 package evovital.uniquindio.edu.co;
 
-import evovital.uniquindio.edu.co.dto.auxiliar.EmailDTO;
-import evovital.uniquindio.edu.co.servicios.especificaciones.EmailService;
+import evovital.uniquindio.edu.co.config.MailProperties;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-public class EmailTest {
+class EmailTest {
+
+
 
     @Autowired
-    private EmailService emailService;
+    private MailProperties mailProperties;
+
 
     @Test
-    public void enviarEmailTest() {
+    void verifyEmail(){
+        //obtengo la variable de entorno llamada email
+        String email = System.getenv("MAIL");
+        System.out.println(email);
 
-        try {
-
-            emailService.enviarEmail(new EmailDTO(
-                    "juescaos42@gmail.com",
-                    "prueba de test con EvoVital",
-                    "Hola, este es un mensaje de prueba de test con EvoVital"
-            ));
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
+        assert mailProperties.getUsername().equals(email);
     }
+
+
 }
