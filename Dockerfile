@@ -1,18 +1,12 @@
-#
 # Build stage
-#
-FROM gradle:latest AS build
+FROM gradle:8.4.0-jdk17 AS build
 COPY --chown=gradle:gradle . /home/gradle/src
 WORKDIR /home/gradle/src
-RUN gradle clean
-RUN gradle bootJar
+RUN gradle bootJar --no-daemon
 
-
-#
 # Package stage
-#
 FROM openjdk:17
 ARG JAR_FILE=build/libs/*.jar
-COPY --from=build /home/gradle/src/build/libs/*.jar app.jar
-EXPOSE ${PORT}
+COPY --from=build /home/gradle/src/${JAR_FILE} app.jar
+EXPOSE 8080
 ENTRYPOINT ["java","-jar","/app.jar"]
