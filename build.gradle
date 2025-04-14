@@ -37,3 +37,13 @@ configurations {
         extendsFrom annotationProcessor
     }
 }
+
+
+// Add this test configuration to your build.gradle
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+        exceptionFormat = 'full'
+    }
+}

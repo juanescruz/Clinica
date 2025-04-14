@@ -42,6 +42,7 @@ public class PacienteServiceImpl implements PacienteService {
 
     /**
      * Registra un nuevo paciente en la base de datos y en el sistema
+     *
      * @param pacienteDTO
      * @return
      */
@@ -50,7 +51,7 @@ public class PacienteServiceImpl implements PacienteService {
 
         Paciente paciente = pacienteDTO.toEntity();
         paciente.setPassword(new BCryptPasswordEncoder().encode(paciente.getPassword()));
-        paciente.setEstaActivo( true );
+        paciente.setEstaActivo(true);
 
         paciente = pacienteRepository.save(paciente);
         return paciente.getId();
@@ -58,6 +59,7 @@ public class PacienteServiceImpl implements PacienteService {
 
     /**
      * Edita el perfil del paciente en el sistema
+     *
      * @param idPaciente
      * @param pacienteDTO
      * @return
@@ -66,7 +68,7 @@ public class PacienteServiceImpl implements PacienteService {
     @Override
     public Long editarPerfil(Long idPaciente, PacienteDTO pacienteDTO) throws Exception {
 
-        Paciente pacienteEncontrado = pacienteRepository.findById(idPaciente).orElseThrow( () -> new Exception("No se encontró el paciente"));
+        Paciente pacienteEncontrado = pacienteRepository.findById(idPaciente).orElseThrow(() -> new Exception("No se encontró el paciente"));
 
         if (!pacienteEncontrado.getCedula().equals(pacienteDTO.cedula()))
             usuarioRepository.findByCedula(pacienteDTO.cedula()).ifPresent(m -> {
@@ -80,7 +82,7 @@ public class PacienteServiceImpl implements PacienteService {
 
         Paciente paciente = pacienteDTO.toEntity();
         paciente.setId(idPaciente);
-        paciente.setEstaActivo( true );
+        paciente.setEstaActivo(true);
         paciente.setPassword(pacienteEncontrado.getPassword());
 
         return pacienteRepository.save(paciente).getId();
@@ -89,6 +91,7 @@ public class PacienteServiceImpl implements PacienteService {
 
     /**
      * elimina una cuenta de paciente
+     *
      * @param idPaciente
      * @return
      */
@@ -100,11 +103,12 @@ public class PacienteServiceImpl implements PacienteService {
         );
 
         paciente.setEstaActivo(false);
-        return new PacienteDTO( pacienteRepository.save(paciente) );
+        return new PacienteDTO(pacienteRepository.save(paciente));
     }
 
     /**
      * Envia un email al paciente con un link para recuperar su contraseña
+     *
      * @param emailPaciente
      */
     @Override
@@ -127,6 +131,7 @@ public class PacienteServiceImpl implements PacienteService {
 
     /**
      * Cambia la contraseña del paciente
+     *
      * @param idPaciente
      * @param newPassword
      */
@@ -141,6 +146,7 @@ public class PacienteServiceImpl implements PacienteService {
 
     /**
      * Crea una nueva consulta a nombre del paciente
+     *
      * @param consultaDTO
      */
     @Override
@@ -177,6 +183,7 @@ public class PacienteServiceImpl implements PacienteService {
 
     /**
      * Lista todas las PQRS del paciente
+     *
      * @param idPaciente
      * @return
      */
@@ -188,8 +195,14 @@ public class PacienteServiceImpl implements PacienteService {
         return pqrsPaciente.stream().map(PQRSDTOPaciente::new).toList();
     }
 
+    @Override
+    public List<Pqrs> listarPQRSEntityPaciente(Long idPaciente) {
+        return pqrsRepository.findAllByConsulta_Paciente_Id(idPaciente);
+    }
+
     /**
      * Responde una PQRS respondida por el administrador
+     *
      * @param mensajeUsuario
      * @return
      */
@@ -205,6 +218,7 @@ public class PacienteServiceImpl implements PacienteService {
 
     /**
      * Lista todas las consultas que ha hecho un paciente en especifico
+     *
      * @param idPaciente
      * @return
      */
@@ -213,8 +227,14 @@ public class PacienteServiceImpl implements PacienteService {
         return consultaRepository.findAllByPaciente_Id(idPaciente).stream().map(ConsultaDTOPaciente::new).toList();
     }
 
+    @Override
+    public List<Consulta> listarConsultasEntityPaciente(Long idPaciente) {
+        return consultaRepository.findAllByPaciente_Id(idPaciente);
+    }
+
     /**
      * trae todas las consultas de un paciente que haya hecho en una fecha en especifico
+     *
      * @param idPaciente
      * @param fecha
      * @return
@@ -226,6 +246,7 @@ public class PacienteServiceImpl implements PacienteService {
 
     /**
      * trae todas las consultas de una paciente que haya agendado con un medico en particular
+     *
      * @param idPaciente
      * @param idMedico
      * @return
@@ -237,16 +258,18 @@ public class PacienteServiceImpl implements PacienteService {
 
     /**
      * obtiene el detalle de una consulta en especifico
+     *
      * @param idConsulta
      * @return
      */
     @Override
     public DetalleConsultaDTOPaciente verDetalleConsulta(Long idConsulta) {
-        return new DetalleConsultaDTOPaciente( consultaRepository.findById(idConsulta).orElseThrow(() -> new RuntimeException("No se encontró la consulta")) );
+        return new DetalleConsultaDTOPaciente(consultaRepository.findById(idConsulta).orElseThrow(() -> new RuntimeException("No se encontró la consulta")));
     }
 
     /**
      * reagenda una consulta en especifico
+     *
      * @param idConsulta
      * @param fechaYHora
      * @return
@@ -263,6 +286,7 @@ public class PacienteServiceImpl implements PacienteService {
 
     /**
      * califica una PQRS en especifico
+     *
      * @param idPQRS
      * @param calificacion
      * @return
@@ -277,6 +301,7 @@ public class PacienteServiceImpl implements PacienteService {
 
     /**
      * trae el perfil de un paciente en especifico
+     *
      * @param idPaciente
      * @return
      */
@@ -284,5 +309,11 @@ public class PacienteServiceImpl implements PacienteService {
     public PacienteDTOPaciente verPerfil(Long idPaciente) {
         Paciente pacienteEncontrado = pacienteRepository.findById(idPaciente).orElseThrow(() -> new RuntimeException("No se encontró el paciente"));
         return new PacienteDTOPaciente(pacienteEncontrado);
+    }
+
+    @Override
+    public Paciente verPerfilEntity(Long idPaciente) {
+        return pacienteRepository.findById(idPaciente).orElseThrow(() -> new RuntimeException("No se encontró el paciente"));
+
     }
 }

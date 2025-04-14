@@ -1,5 +1,8 @@
 package evovital.uniquindio.edu.co.servicios.especificaciones;
 
+import evovital.uniquindio.edu.co.domain.Consulta;
+import evovital.uniquindio.edu.co.domain.Paciente;
+import evovital.uniquindio.edu.co.domain.Pqrs;
 import evovital.uniquindio.edu.co.dto.consulta.ConsultaDTOPaciente;
 import evovital.uniquindio.edu.co.dto.consulta.DetalleConsultaDTOPaciente;
 import evovital.uniquindio.edu.co.dto.consulta.InfoConsultaDTO;
@@ -31,9 +34,13 @@ public interface PacienteService {
 
     List<PQRSDTOPaciente> listarPQRSPaciente(Long idPaciente);
 
+    List<Pqrs> listarPQRSEntityPaciente(Long idPaciente);
+
     Long responderPQRS(MensajeDTOUsuario mensajeUsuario);
 
     List<ConsultaDTOPaciente> listarConsultasPaciente(Long idPaciente);
+
+    List<Consulta> listarConsultasEntityPaciente(Long idPaciente);
 
     List<ConsultaDTOPaciente> filtrarConsultasPorFecha(Long idPaciente, LocalDate fecha);
 
@@ -46,4 +53,6 @@ public interface PacienteService {
     Long calificarPQRS(Long idPQRS, int calificacion);
 
     PacienteDTOPaciente verPerfil(Long idPaciente);
+
+    Paciente verPerfilEntity(Long idPaciente);
 }
