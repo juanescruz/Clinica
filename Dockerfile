@@ -5,6 +5,7 @@ WORKDIR /home/gradle/src
 RUN gradle bootJar --no-daemon
 
 # Package stage
+#COMENTARIO PRUEBA
 FROM openjdk:17
 ARG JAR_FILE=build/libs/*.jar
 COPY --from=build /home/gradle/src/${JAR_FILE} app.jar
