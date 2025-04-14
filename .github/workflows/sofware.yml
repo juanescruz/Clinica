@@ -35,4 +35,4 @@ jobs:
 
       - name: Ejecutar Tests
         working-directory: src/test/java/evovital/uniquindio/edu/co
-        run: ./gradlew test --tests evovital.uniquindio.edu.co.PacienteTest
+        run: ./gradlew test --tests "PacienteTest.java"
