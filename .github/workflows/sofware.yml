@@ -34,5 +34,5 @@ jobs:
         run: ls -lasht src
 
       - name: Ejecutar Tests
-        working-directory: src/test/java/evovital/uniquindio/edu/co
-        run: ./gradlew test --tests "evovital.uniquindio.edu.co.PacienteTest"
+        working-directory: /
+        run: ./gradlew test --tests evovital.uniquindio.edu.co.PacienteTest
